@@ -14,152 +14,94 @@
   <!-- Top Navigation Controls -->
   <header class="top-nav">
     <div class="nav-left">
-      <!-- Mode Switch: Slideshow (Default) vs 9-Panel Grid -->
+      <!-- Mode Switch: Slideshow (Default) vs Grid -->
       <div class="view-toggle">
         <button id="mode-slide-btn" class="toggle-btn active" title="Mode Diaporama (Défilement 15s)">
           <span>▶</span> Diaporama
         </button>
-        <button id="mode-grid-btn" class="toggle-btn" title="Mode Grille 9 panneaux">
-          <span>▦</span> Grille 9
+        <button id="mode-grid-btn" class="toggle-btn" title="Mode Grille">
+          <span>▦</span> Grille
         </button>
       </div>
     </div>
 
-    <!-- Chapter Indicator -->
+    <!-- Chapter Indicator (Pages 1 à 17) -->
     <nav class="chapter-dots">
-      <button class="dot-btn active" data-page="1" title="Chapitre I : Genèse">
-        <span class="dot-num">I</span>
-      </button>
+      <button class="dot-btn active" data-page="1" title="Page 1 : Genèse"><span class="dot-num">I</span></button>
       <span class="dot-line"></span>
-      <button class="dot-btn locked" data-page="2" title="Chapitre II : Exode & Lévitique (Verrouillé)" disabled>
-        <span class="dot-num">II</span>
-      </button>
+      <button class="dot-btn locked" data-page="2" title="Page 2 : Exode & Lévitique" disabled><span class="dot-num">II</span></button>
       <span class="dot-line"></span>
-      <button class="dot-btn locked" data-page="3" title="Chapitre III : Le Repos (Verrouillé)" disabled>
-        <span class="dot-num">III</span>
-      </button>
+      <button class="dot-btn locked" data-page="3" title="Page 3 : Nombres & Deutéronome" disabled><span class="dot-num">III</span></button>
       <span class="dot-line"></span>
-      <button class="dot-btn locked" data-page="4" title="Chapitre IV : Josué à Juges (Verrouillé)" disabled>
-        <span class="dot-num">IV</span>
-      </button>
+      <button class="dot-btn locked" data-page="4" title="Page 4 : Josué à Juges" disabled><span class="dot-num">IV</span></button>
       <span class="dot-line"></span>
-      <button class="dot-btn locked" data-page="5" title="Chapitre V : Nombres (Verrouillé)" disabled>
-        <span class="dot-num">V</span>
-      </button>
+      <button class="dot-btn locked" data-page="5" title="Page 5 : 1 Samuel → 1 Rois (ch. 1-11)" disabled><span class="dot-num">V</span></button>
       <span class="dot-line"></span>
-      <button class="dot-btn locked" data-page="6" title="Chapitre VI : Deutéronome (Verrouillé)" disabled>
-        <span class="dot-num">VI</span>
-      </button>
+      <button class="dot-btn locked" data-page="6" title="Page 6 : 1 Rois → 2 Rois" disabled><span class="dot-num">VI</span></button>
       <span class="dot-line"></span>
-      <button class="dot-btn locked" data-page="7" title="Chapitre VII : Josué (Verrouillé)" disabled>
-        <span class="dot-num">VII</span>
-      </button>
+      <button class="dot-btn locked" data-page="7" title="Page 7 : Ésaïe, Jérémie, Prophètes" disabled><span class="dot-num">VII</span></button>
       <span class="dot-line"></span>
-      <button class="dot-btn locked" data-page="8" title="Chapitre VIII : Juges (Verrouillé)" disabled>
-        <span class="dot-num">VIII</span>
-      </button>
+      <button class="dot-btn locked" data-page="8" title="Page 8 : Lamentations, Ézéchiel & Daniel" disabled><span class="dot-num">VIII</span></button>
       <span class="dot-line"></span>
-      <button class="dot-btn locked" data-page="9" title="Chapitre IX : Ruth (Verrouillé)" disabled>
-        <span class="dot-num">IX</span>
-      </button>
+      <button class="dot-btn locked" data-page="9" title="Page 9 : Esdras, Néhémie & Prophètes" disabled><span class="dot-num">IX</span></button>
       <span class="dot-line"></span>
-      <button class="dot-btn locked" data-page="10" title="Chapitre X : Samuel &amp; Roi David (Verrouillé)" disabled>
-        <span class="dot-num">X</span>
-      </button>
+      <button class="dot-btn locked" data-page="10" title="Page 10 : Esther" disabled><span class="dot-num">X</span></button>
+      <span class="dot-line"></span>
+      <button class="dot-btn locked" data-page="11" title="Page 11 : Matthieu, Marc, Luc, Jean" disabled><span class="dot-num">XI</span></button>
+      <span class="dot-line"></span>
+      <button class="dot-btn locked" data-page="12" title="Page 12 : Actes 1-12 & Jacques" disabled><span class="dot-num">XII</span></button>
+      <span class="dot-line"></span>
+      <button class="dot-btn locked" data-page="13" title="Page 13 : Actes 13-18, Galates, Thessaloniciens" disabled><span class="dot-num">XIII</span></button>
+      <span class="dot-line"></span>
+      <button class="dot-btn locked" data-page="14" title="Page 14 : Actes 19-20, Corinthiens, Romains" disabled><span class="dot-num">XIV</span></button>
+      <span class="dot-line"></span>
+      <button class="dot-btn locked" data-page="15" title="Page 15 : Actes 21-28 & Épîtres de prison" disabled><span class="dot-num">XV</span></button>
+      <span class="dot-line"></span>
+      <button class="dot-btn locked" data-page="16" title="Page 16 : Pastorales, Hébreux, Pierre, Jude" disabled><span class="dot-num">XVI</span></button>
+      <span class="dot-line"></span>
+      <button class="dot-btn locked" data-page="17" title="Page 17 : Épîtres de Jean & Apocalypse" disabled><span class="dot-num">XVII</span></button>
     </nav>
   </header>
 
   <!-- =========================================================================
-       PAGE 1 : GENÈSE (9 SCÈNES CONCRÈTES & DIAPORAMA 15S)
+       PAGE 1 : GENÈSE
        ========================================================================= -->
   <section class="story-page active" id="page-1" data-page="1">
-    
-    <!-- Slideshow View (Défaut : Défilement automatique 15s) -->
     <div class="slideshow-view" id="slideshow-1">
       <div class="slide-viewport">
-        <!-- 1. Création -->
         <div class="slide-item active" style="background-image: url('images/panels/p1_1.jpg');"></div>
-        <!-- 2. Adam et Ève / fruit défendu -->
         <div class="slide-item" style="background-image: url('images/panels/p1_2.jpg');"></div>
-        <!-- 3. Caïn et Abel -->
         <div class="slide-item" style="background-image: url('images/panels/p1_3.jpg');"></div>
-        <!-- 4. L'Arche de Noé -->
         <div class="slide-item" style="background-image: url('images/panels/p1_4.jpg');"></div>
-        <!-- 5. La Tour de Babel -->
         <div class="slide-item" style="background-image: url('images/panels/p1_5.jpg');"></div>
-        <!-- 6. Abraham appelé / bénédiction -->
         <div class="slide-item" style="background-image: url('images/panels/p1_6.jpg');"></div>
-        <!-- 7. Jacob (Israël) -->
         <div class="slide-item" style="background-image: url('images/panels/p1_7.jpg');"></div>
-        <!-- 8. Joseph vendu en Égypte -->
         <div class="slide-item" style="background-image: url('images/panels/p1_8.jpg');"></div>
-        <!-- 9. Joseph réconcilié sauvant son peuple -->
         <div class="slide-item" style="background-image: url('images/panels/p1_9.jpg');"></div>
       </div>
-
-      <!-- 15s Progress Bar -->
-      <div class="slide-progress-track">
-        <div class="slide-progress-bar" id="progress-1"></div>
-      </div>
-
-      <!-- Controls & Bullets -->
+      <div class="slide-progress-track"><div class="slide-progress-bar" id="progress-1"></div></div>
       <button class="slide-nav-btn prev-btn" onclick="prevSlide(1)">‹</button>
       <button class="slide-nav-btn next-btn" onclick="nextSlide(1)">›</button>
       <div class="slide-bullets" id="bullets-1"></div>
     </div>
 
-    <!-- 3x3 Mosaic Grid (Optionnelle) -->
     <div class="mosaic-grid hidden" id="grid-1">
-      <div class="panel-card" data-index="0" title="1. La Création">
-        <img src="images/panels/p1_1.jpg" alt="" loading="lazy">
-        <span class="panel-tag">I</span>
-      </div>
-      <div class="panel-card" data-index="1" title="2. Adam & Ève">
-        <img src="images/panels/p1_2.jpg" alt="" loading="lazy">
-        <span class="panel-tag">II</span>
-      </div>
-      <div class="panel-card" data-index="2" title="3. Caïn & Abel">
-        <img src="images/panels/p1_3.jpg" alt="" loading="lazy">
-        <span class="panel-tag">III</span>
-      </div>
-      <div class="panel-card" data-index="3" title="4. L'Arche de Noé">
-        <img src="images/panels/p1_4.jpg" alt="" loading="lazy">
-        <span class="panel-tag">IV</span>
-      </div>
-      <div class="panel-card" data-index="4" title="5. La Tour de Babel">
-        <img src="images/panels/p1_5.jpg" alt="" loading="lazy">
-        <span class="panel-tag">V</span>
-      </div>
-      <div class="panel-card" data-index="5" title="6. Abraham">
-        <img src="images/panels/p1_6.jpg" alt="" loading="lazy">
-        <span class="panel-tag">VI</span>
-      </div>
-      <div class="panel-card" data-index="6" title="7. Jacob (Israël)">
-        <img src="images/panels/p1_7.jpg" alt="" loading="lazy">
-        <span class="panel-tag">VII</span>
-      </div>
-      <div class="panel-card" data-index="7" title="8. Joseph vendu">
-        <img src="images/panels/p1_8.jpg" alt="" loading="lazy">
-        <span class="panel-tag">VIII</span>
-      </div>
-      <div class="panel-card" data-index="8" title="9. Joseph sauve son peuple">
-        <img src="images/panels/p1_9.jpg" alt="" loading="lazy">
-        <span class="panel-tag">IX</span>
-      </div>
+      <div class="panel-card" data-index="0" title="1. La Création"><img src="images/panels/p1_1.jpg" alt="" loading="lazy"><span class="panel-tag">I</span></div>
+      <div class="panel-card" data-index="1" title="2. Adam & Ève"><img src="images/panels/p1_2.jpg" alt="" loading="lazy"><span class="panel-tag">II</span></div>
+      <div class="panel-card" data-index="2" title="3. Caïn & Abel"><img src="images/panels/p1_3.jpg" alt="" loading="lazy"><span class="panel-tag">III</span></div>
+      <div class="panel-card" data-index="3" title="4. L'Arche de Noé"><img src="images/panels/p1_4.jpg" alt="" loading="lazy"><span class="panel-tag">IV</span></div>
+      <div class="panel-card" data-index="4" title="5. La Tour de Babel"><img src="images/panels/p1_5.jpg" alt="" loading="lazy"><span class="panel-tag">V</span></div>
+      <div class="panel-card" data-index="5" title="6. Abraham"><img src="images/panels/p1_6.jpg" alt="" loading="lazy"><span class="panel-tag">VI</span></div>
+      <div class="panel-card" data-index="6" title="7. Jacob (Israël)"><img src="images/panels/p1_7.jpg" alt="" loading="lazy"><span class="panel-tag">VII</span></div>
+      <div class="panel-card" data-index="7" title="8. Joseph vendu"><img src="images/panels/p1_8.jpg" alt="" loading="lazy"><span class="panel-tag">VIII</span></div>
+      <div class="panel-card" data-index="8" title="9. Joseph sauve son peuple"><img src="images/panels/p1_9.jpg" alt="" loading="lazy"><span class="panel-tag">IX</span></div>
     </div>
 
     <!-- Password Gate (peuple) -->
     <div class="floating-gate">
       <form class="gate-form" id="form-gate-1" onsubmit="return false;">
         <span class="lock-glyph">🔒</span>
-        <input 
-          type="text" 
-          id="pass-1" 
-          class="gate-input" 
-          placeholder="Mot de passe..." 
-          autocomplete="off" 
-          spellcheck="false"
-        >
+        <input type="text" id="pass-1" class="gate-input" placeholder="Mot de passe..." autocomplete="off" spellcheck="false">
         <button type="submit" class="gate-btn" title="Valider">➜</button>
       </form>
       <div class="gate-status" id="feedback-1"></div>
@@ -167,96 +109,44 @@
   </section>
 
   <!-- =========================================================================
-       PAGE 2 : EXODE & LÉVITIQUE (9 SCÈNES CONCRÈTES & DIAPORAMA 15S)
+       PAGE 2 : EXODE & LÉVITIQUE
        ========================================================================= -->
   <section class="story-page" id="page-2" data-page="2">
-    
-    <!-- Slideshow View (Défaut : Défilement automatique 15s) -->
     <div class="slideshow-view" id="slideshow-2">
       <div class="slide-viewport">
-        <!-- 1. Moïse sur le Nil -->
         <div class="slide-item active" style="background-image: url('images/panels/p2_1.jpg');"></div>
-        <!-- 2. Buisson ardent -->
         <div class="slide-item" style="background-image: url('images/panels/p2_2.jpg');"></div>
-        <!-- 3. Devant Pharaon -->
         <div class="slide-item" style="background-image: url('images/panels/p2_3.jpg');"></div>
-        <!-- 4. Les Plaies d'Égypte -->
         <div class="slide-item" style="background-image: url('images/panels/p2_4.jpg');"></div>
-        <!-- 5. La Pâque (sang de l'agneau) -->
         <div class="slide-item" style="background-image: url('images/panels/p2_5.jpg');"></div>
-        <!-- 6. Traversée de la Mer Rouge -->
         <div class="slide-item" style="background-image: url('images/panels/p2_6.jpg');"></div>
-        <!-- 7. Les 10 Commandements au Sinaï -->
         <div class="slide-item" style="background-image: url('images/panels/p2_7.jpg');"></div>
-        <!-- 8. Le Veau d'Or -->
         <div class="slide-item" style="background-image: url('images/panels/p2_8.jpg');"></div>
-        <!-- 9. Le Tabernacle & Le Grand Pardon -->
         <div class="slide-item" style="background-image: url('images/panels/p2_9.jpg');"></div>
       </div>
-
-      <!-- 15s Progress Bar -->
-      <div class="slide-progress-track">
-        <div class="slide-progress-bar" id="progress-2"></div>
-      </div>
-
-      <!-- Controls & Bullets -->
+      <div class="slide-progress-track"><div class="slide-progress-bar" id="progress-2"></div></div>
       <button class="slide-nav-btn prev-btn" onclick="prevSlide(2)">‹</button>
       <button class="slide-nav-btn next-btn" onclick="nextSlide(2)">›</button>
       <div class="slide-bullets" id="bullets-2"></div>
     </div>
 
-    <!-- 3x3 Mosaic Grid (Optionnelle) -->
     <div class="mosaic-grid hidden" id="grid-2">
-      <div class="panel-card" data-index="0" title="1. Moïse sur le Nil">
-        <img src="images/panels/p2_1.jpg" alt="" loading="lazy">
-        <span class="panel-tag">I</span>
-      </div>
-      <div class="panel-card" data-index="1" title="2. Le Buisson Ardent">
-        <img src="images/panels/p2_2.jpg" alt="" loading="lazy">
-        <span class="panel-tag">II</span>
-      </div>
-      <div class="panel-card" data-index="2" title="3. Devant Pharaon">
-        <img src="images/panels/p2_3.jpg" alt="" loading="lazy">
-        <span class="panel-tag">III</span>
-      </div>
-      <div class="panel-card" data-index="3" title="4. Les Plaies d'Égypte">
-        <img src="images/panels/p2_4.jpg" alt="" loading="lazy">
-        <span class="panel-tag">IV</span>
-      </div>
-      <div class="panel-card" data-index="4" title="5. La Pâque">
-        <img src="images/panels/p2_5.jpg" alt="" loading="lazy">
-        <span class="panel-tag">V</span>
-      </div>
-      <div class="panel-card" data-index="5" title="6. La Mer Rouge">
-        <img src="images/panels/p2_6.jpg" alt="" loading="lazy">
-        <span class="panel-tag">VI</span>
-      </div>
-      <div class="panel-card" data-index="6" title="7. Les 10 Commandements">
-        <img src="images/panels/p2_7.jpg" alt="" loading="lazy">
-        <span class="panel-tag">VII</span>
-      </div>
-      <div class="panel-card" data-index="7" title="8. Le Veau d'Or">
-        <img src="images/panels/p2_8.jpg" alt="" loading="lazy">
-        <span class="panel-tag">VIII</span>
-      </div>
-      <div class="panel-card" data-index="8" title="9. Le Tabernacle">
-        <img src="images/panels/p2_9.jpg" alt="" loading="lazy">
-        <span class="panel-tag">IX</span>
-      </div>
+      <div class="panel-card" data-index="0" title="1. Moïse sur le Nil"><img src="images/panels/p2_1.jpg" alt="" loading="lazy"><span class="panel-tag">I</span></div>
+      <div class="panel-card" data-index="1" title="2. Le Buisson Ardent"><img src="images/panels/p2_2.jpg" alt="" loading="lazy"><span class="panel-tag">II</span></div>
+      <div class="panel-card" data-index="2" title="3. Devant Pharaon"><img src="images/panels/p2_3.jpg" alt="" loading="lazy"><span class="panel-tag">III</span></div>
+      <div class="panel-card" data-index="3" title="4. Les Plaies d'Égypte"><img src="images/panels/p2_4.jpg" alt="" loading="lazy"><span class="panel-tag">IV</span></div>
+      <div class="panel-card" data-index="4" title="5. La Pâque"><img src="images/panels/p2_5.jpg" alt="" loading="lazy"><span class="panel-tag">V</span></div>
+      <div class="panel-card" data-index="5" title="6. La Mer Rouge"><img src="images/panels/p2_6.jpg" alt="" loading="lazy"><span class="panel-tag">VI</span></div>
+      <div class="panel-card" data-index="6" title="7. Les 10 Commandements"><img src="images/panels/p2_7.jpg" alt="" loading="lazy"><span class="panel-tag">VII</span></div>
+      <div class="panel-card" data-index="7" title="8. Le Veau d'Or"><img src="images/panels/p2_8.jpg" alt="" loading="lazy"><span class="panel-tag">VIII</span></div>
+      <div class="panel-card" data-index="8" title="9. Le Tabernacle"><img src="images/panels/p2_9.jpg" alt="" loading="lazy"><span class="panel-tag">IX</span></div>
     </div>
 
     <!-- Password Gate (repos) -->
     <div class="floating-gate">
       <form class="gate-form" id="form-gate-2" onsubmit="return false;">
         <span class="lock-glyph">🔒</span>
-        <input 
-          type="text" 
-          id="pass-2" 
-          class="gate-input" 
-          placeholder="Mot de passe..." 
-          autocomplete="off" 
-          spellcheck="false"
-        >
+        <input type="text" id="pass-2" class="gate-input" placeholder="Mot de passe..." autocomplete="off" spellcheck="false">
         <button type="submit" class="gate-btn" title="Valider">➜</button>
       </form>
       <div class="gate-status" id="feedback-2"></div>
@@ -264,33 +154,28 @@
   </section>
 
   <!-- =========================================================================
-       PAGE 3 : NOMBRES & DEUTÉRONOME
+       PAGE 3 : NOMBRES ET DEUTÉRONOME
        ========================================================================= -->
   <section class="story-page" id="page-3" data-page="3">
-
-    <!-- Slideshow View -->
     <div class="slideshow-view" id="slideshow-3">
       <div class="slide-viewport">
         <div class="slide-item active" style="background-image: url('images/panels/p3_1.jpg');"></div>
         <div class="slide-item" style="background-image: url('images/panels/p3_2.jpg');"></div>
         <div class="slide-item" style="background-image: url('images/panels/p3_3.jpg');"></div>
       </div>
-      <div class="slide-progress-track">
-        <div class="slide-progress-bar" id="progress-3"></div>
-      </div>
+      <div class="slide-progress-track"><div class="slide-progress-bar" id="progress-3"></div></div>
       <button class="slide-nav-btn prev-btn" onclick="prevSlide(3)">‹</button>
       <button class="slide-nav-btn next-btn" onclick="nextSlide(3)">›</button>
       <div class="slide-bullets" id="bullets-3"></div>
     </div>
 
-    <!-- Mosaic Grid -->
     <div class="mosaic-grid hidden" id="grid-3">
-      <div class="panel-card" data-index="0" title="1. Les espions et la grappe de Canaan"><img src="images/panels/p3_1.jpg" alt="" loading="lazy"><span class="panel-tag">I</span></div>
-      <div class="panel-card" data-index="1" title="2. Moïse et le serpent d'airain"><img src="images/panels/p3_2.jpg" alt="" loading="lazy"><span class="panel-tag">II</span></div>
-      <div class="panel-card" data-index="2" title="3. Moïse et le discours d'adieu"><img src="images/panels/p3_3.jpg" alt="" loading="lazy"><span class="panel-tag">III</span></div>
+      <div class="panel-card" data-index="0" title="p3_1 Les espions rapportent la grappe de Canaan"><img src="images/panels/p3_1.jpg" alt="" loading="lazy"><span class="panel-tag">I</span></div>
+      <div class="panel-card" data-index="1" title="p3_2 Le serpent d'airain et les 40 ans de désert"><img src="images/panels/p3_2.jpg" alt="" loading="lazy"><span class="panel-tag">II</span></div>
+      <div class="panel-card" data-index="2" title="p3_3 Discours d'adieu de Moïse et mort au mont Nébo"><img src="images/panels/p3_3.jpg" alt="" loading="lazy"><span class="panel-tag">III</span></div>
     </div>
 
-    <!-- Password Gate -->
+    <!-- Password Gate (devant) -->
     <div class="floating-gate">
       <form class="gate-form" id="form-gate-3" onsubmit="return false;">
         <span class="lock-glyph">🔒</span>
@@ -302,30 +187,28 @@
   </section>
 
   <!-- =========================================================================
-       PAGE 4 : JOSUÉ & JUGES
+       PAGE 4 : JOSUÉ À JUGES
        ========================================================================= -->
   <section class="story-page" id="page-4" data-page="4">
-
     <div class="slideshow-view" id="slideshow-4">
       <div class="slide-viewport">
         <div class="slide-item active" style="background-image: url('images/panels/p4_1.jpg');"></div>
         <div class="slide-item" style="background-image: url('images/panels/p4_2.jpg');"></div>
         <div class="slide-item" style="background-image: url('images/panels/p4_3.jpg');"></div>
       </div>
-      <div class="slide-progress-track">
-        <div class="slide-progress-bar" id="progress-4"></div>
-      </div>
+      <div class="slide-progress-track"><div class="slide-progress-bar" id="progress-4"></div></div>
       <button class="slide-nav-btn prev-btn" onclick="prevSlide(4)">‹</button>
       <button class="slide-nav-btn next-btn" onclick="nextSlide(4)">›</button>
       <div class="slide-bullets" id="bullets-4"></div>
     </div>
 
     <div class="mosaic-grid hidden" id="grid-4">
-      <div class="panel-card" data-index="0" title="1. La chute des murs de Jéricho"><img src="images/panels/p4_1.jpg" alt="" loading="lazy"><span class="panel-tag">I</span></div>
-      <div class="panel-card" data-index="1" title="2. Débora la prophétesse"><img src="images/panels/p4_2.jpg" alt="" loading="lazy"><span class="panel-tag">II</span></div>
-      <div class="panel-card" data-index="2" title="3. Samson et Dalila"><img src="images/panels/p4_3.jpg" alt="" loading="lazy"><span class="panel-tag">III</span></div>
+      <div class="panel-card" data-index="0" title="p4_1 Chute des murailles de Jéricho"><img src="images/panels/p4_1.jpg" alt="" loading="lazy"><span class="panel-tag">I</span></div>
+      <div class="panel-card" data-index="1" title="p4_2 Les Juges : Débora et Gédéon"><img src="images/panels/p4_2.jpg" alt="" loading="lazy"><span class="panel-tag">II</span></div>
+      <div class="panel-card" data-index="2" title="p4_3 Samson et Dalila / Ruth et Boaz"><img src="images/panels/p4_3.jpg" alt="" loading="lazy"><span class="panel-tag">III</span></div>
     </div>
 
+    <!-- Password Gate (David) -->
     <div class="floating-gate">
       <form class="gate-form" id="form-gate-4" onsubmit="return false;">
         <span class="lock-glyph">🔒</span>
@@ -337,30 +220,28 @@
   </section>
 
   <!-- =========================================================================
-       PAGE 5 : SAMUEL & SAÜL
+       PAGE 5 : 1 SAMUEL → 1 ROIS (CH. 1-11)
        ========================================================================= -->
   <section class="story-page" id="page-5" data-page="5">
-
     <div class="slideshow-view" id="slideshow-5">
       <div class="slide-viewport">
         <div class="slide-item active" style="background-image: url('images/panels/p5_1.jpg');"></div>
         <div class="slide-item" style="background-image: url('images/panels/p5_2.jpg');"></div>
         <div class="slide-item" style="background-image: url('images/panels/p5_3.jpg');"></div>
       </div>
-      <div class="slide-progress-track">
-        <div class="slide-progress-bar" id="progress-5"></div>
-      </div>
+      <div class="slide-progress-track"><div class="slide-progress-bar" id="progress-5"></div></div>
       <button class="slide-nav-btn prev-btn" onclick="prevSlide(5)">‹</button>
       <button class="slide-nav-btn next-btn" onclick="nextSlide(5)">›</button>
       <div class="slide-bullets" id="bullets-5"></div>
     </div>
 
     <div class="mosaic-grid hidden" id="grid-5">
-      <div class="panel-card" data-index="0" title="1. Samuel enfant appelé par Dieu"><img src="images/panels/p5_1.jpg" alt="" loading="lazy"><span class="panel-tag">I</span></div>
-      <div class="panel-card" data-index="1" title="2. David et Goliath"><img src="images/panels/p5_2.jpg" alt="" loading="lazy"><span class="panel-tag">II</span></div>
-      <div class="panel-card" data-index="2" title="3. David jouant de la harpe devant Saül"><img src="images/panels/p5_3.jpg" alt="" loading="lazy"><span class="panel-tag">III</span></div>
+      <div class="panel-card" data-index="0" title="p5_1 Vocation de Samuel et onction de Saül"><img src="images/panels/p5_1.jpg" alt="" loading="lazy"><span class="panel-tag">I</span></div>
+      <div class="panel-card" data-index="1" title="p5_2 David terrasse Goliath"><img src="images/panels/p5_2.jpg" alt="" loading="lazy"><span class="panel-tag">II</span></div>
+      <div class="panel-card" data-index="2" title="p5_3 David joue de la harpe devant Saül"><img src="images/panels/p5_3.jpg" alt="" loading="lazy"><span class="panel-tag">III</span></div>
     </div>
 
+    <!-- Password Gate (Toujours) -->
     <div class="floating-gate">
       <form class="gate-form" id="form-gate-5" onsubmit="return false;">
         <span class="lock-glyph">🔒</span>
@@ -372,30 +253,28 @@
   </section>
 
   <!-- =========================================================================
-       PAGE 6 : LE ROI DAVID
+       PAGE 6 : 1 ROIS → 2 ROIS
        ========================================================================= -->
   <section class="story-page" id="page-6" data-page="6">
-
     <div class="slideshow-view" id="slideshow-6">
       <div class="slide-viewport">
         <div class="slide-item active" style="background-image: url('images/panels/p6_1.jpg');"></div>
         <div class="slide-item" style="background-image: url('images/panels/p6_2.jpg');"></div>
         <div class="slide-item" style="background-image: url('images/panels/p6_3.jpg');"></div>
       </div>
-      <div class="slide-progress-track">
-        <div class="slide-progress-bar" id="progress-6"></div>
-      </div>
+      <div class="slide-progress-track"><div class="slide-progress-bar" id="progress-6"></div></div>
       <button class="slide-nav-btn prev-btn" onclick="prevSlide(6)">‹</button>
       <button class="slide-nav-btn next-btn" onclick="nextSlide(6)">›</button>
       <div class="slide-bullets" id="bullets-6"></div>
     </div>
 
     <div class="mosaic-grid hidden" id="grid-6">
-      <div class="panel-card" data-index="0" title="1. L'arche de l'alliance à Jérusalem"><img src="images/panels/p6_1.jpg" alt="" loading="lazy"><span class="panel-tag">I</span></div>
-      <div class="panel-card" data-index="1" title="2. Nathan le prophète face à David"><img src="images/panels/p6_2.jpg" alt="" loading="lazy"><span class="panel-tag">II</span></div>
-      <div class="panel-card" data-index="2" title="3. Salomon recevant la sagesse de Dieu"><img src="images/panels/p6_3.jpg" alt="" loading="lazy"><span class="panel-tag">III</span></div>
+      <div class="panel-card" data-index="0" title="p6_1 Schisme des royaumes et veaux d'or"><img src="images/panels/p6_1.jpg" alt="" loading="lazy"><span class="panel-tag">I</span></div>
+      <div class="panel-card" data-index="1" title="p6_2 Élie sur le mont Carmel / défi du feu"><img src="images/panels/p6_2.jpg" alt="" loading="lazy"><span class="panel-tag">II</span></div>
+      <div class="panel-card" data-index="2" title="p6_3 Élisée, Jonas à Ninive et chute de Samarie"><img src="images/panels/p6_3.jpg" alt="" loading="lazy"><span class="panel-tag">III</span></div>
     </div>
 
+    <!-- Password Gate (Juda) -->
     <div class="floating-gate">
       <form class="gate-form" id="form-gate-6" onsubmit="return false;">
         <span class="lock-glyph">🔒</span>
@@ -407,30 +286,28 @@
   </section>
 
   <!-- =========================================================================
-       PAGE 7 : ROIS & PROPHÈTES (ÉLIE, ÉLISÉE)
+       PAGE 7 : 2 ROIS, CHRONIQUES, ÉSAÏE, JÉRÉMIE, PROPHÈTES
        ========================================================================= -->
   <section class="story-page" id="page-7" data-page="7">
-
     <div class="slideshow-view" id="slideshow-7">
       <div class="slide-viewport">
         <div class="slide-item active" style="background-image: url('images/panels/p7_1.jpg');"></div>
         <div class="slide-item" style="background-image: url('images/panels/p7_2.jpg');"></div>
         <div class="slide-item" style="background-image: url('images/panels/p7_3.jpg');"></div>
       </div>
-      <div class="slide-progress-track">
-        <div class="slide-progress-bar" id="progress-7"></div>
-      </div>
+      <div class="slide-progress-track"><div class="slide-progress-bar" id="progress-7"></div></div>
       <button class="slide-nav-btn prev-btn" onclick="prevSlide(7)">‹</button>
       <button class="slide-nav-btn next-btn" onclick="nextSlide(7)">›</button>
       <div class="slide-bullets" id="bullets-7"></div>
     </div>
 
     <div class="mosaic-grid hidden" id="grid-7">
-      <div class="panel-card" data-index="0" title="1. Élie sur le mont Carmel"><img src="images/panels/p7_1.jpg" alt="" loading="lazy"><span class="panel-tag">I</span></div>
-      <div class="panel-card" data-index="1" title="2. Élie dans le désert / l'ange qui le nourrit"><img src="images/panels/p7_2.jpg" alt="" loading="lazy"><span class="panel-tag">II</span></div>
-      <div class="panel-card" data-index="2" title="3. Le char de feu emportant Élie au ciel"><img src="images/panels/p7_3.jpg" alt="" loading="lazy"><span class="panel-tag">III</span></div>
+      <div class="panel-card" data-index="0" title="p7_1 Ézéchias et le prophète Ésaïe"><img src="images/panels/p7_1.jpg" alt="" loading="lazy"><span class="panel-tag">I</span></div>
+      <div class="panel-card" data-index="1" title="p7_2 La réforme de Josias et Jérémie dans la citerne"><img src="images/panels/p7_2.jpg" alt="" loading="lazy"><span class="panel-tag">II</span></div>
+      <div class="panel-card" data-index="2" title="p7_3 Nabuchodonosor détruit le Temple de Jérusalem"><img src="images/panels/p7_3.jpg" alt="" loading="lazy"><span class="panel-tag">III</span></div>
     </div>
 
+    <!-- Password Gate (Espérance) -->
     <div class="floating-gate">
       <form class="gate-form" id="form-gate-7" onsubmit="return false;">
         <span class="lock-glyph">🔒</span>
@@ -442,30 +319,28 @@
   </section>
 
   <!-- =========================================================================
-       PAGE 8 : ISAÏE & JÉRÉMIE
+       PAGE 8 : LAMENTATIONS, ÉZÉCHIEL ET DANIEL
        ========================================================================= -->
   <section class="story-page" id="page-8" data-page="8">
-
     <div class="slideshow-view" id="slideshow-8">
       <div class="slide-viewport">
         <div class="slide-item active" style="background-image: url('images/panels/p8_1.jpg');"></div>
         <div class="slide-item" style="background-image: url('images/panels/p8_2.jpg');"></div>
         <div class="slide-item" style="background-image: url('images/panels/p8_3.jpg');"></div>
       </div>
-      <div class="slide-progress-track">
-        <div class="slide-progress-bar" id="progress-8"></div>
-      </div>
+      <div class="slide-progress-track"><div class="slide-progress-bar" id="progress-8"></div></div>
       <button class="slide-nav-btn prev-btn" onclick="prevSlide(8)">‹</button>
       <button class="slide-nav-btn next-btn" onclick="nextSlide(8)">›</button>
       <div class="slide-bullets" id="bullets-8"></div>
     </div>
 
     <div class="mosaic-grid hidden" id="grid-8">
-      <div class="panel-card" data-index="0" title="1. Isaïe voyant la vision de Dieu"><img src="images/panels/p8_1.jpg" alt="" loading="lazy"><span class="panel-tag">I</span></div>
-      <div class="panel-card" data-index="1" title="2. Jérémie pleurant la destruction de Jérusalem"><img src="images/panels/p8_2.jpg" alt="" loading="lazy"><span class="panel-tag">II</span></div>
-      <div class="panel-card" data-index="2" title="3. L'exil à Babylone"><img src="images/panels/p8_3.jpg" alt="" loading="lazy"><span class="panel-tag">III</span></div>
+      <div class="panel-card" data-index="0" title="p8_1 Lamentations et vision des ossements desséchés d'Ézéchiel"><img src="images/panels/p8_1.jpg" alt="" loading="lazy"><span class="panel-tag">I</span></div>
+      <div class="panel-card" data-index="1" title="p8_2 Les trois hébreux dans la fournaise ardente"><img src="images/panels/p8_2.jpg" alt="" loading="lazy"><span class="panel-tag">II</span></div>
+      <div class="panel-card" data-index="2" title="p8_3 Daniel dans la fosse aux lions et vision du Fils de l'homme"><img src="images/panels/p8_3.jpg" alt="" loading="lazy"><span class="panel-tag">III</span></div>
     </div>
 
+    <!-- Password Gate (Homme) -->
     <div class="floating-gate">
       <form class="gate-form" id="form-gate-8" onsubmit="return false;">
         <span class="lock-glyph">🔒</span>
@@ -477,30 +352,28 @@
   </section>
 
   <!-- =========================================================================
-       PAGE 9 : DANIEL & L'EXIL
+       PAGE 9 : ESDRAS → NÉHÉMIE, AGGÉE, ZACHARIE, MALACHIE
        ========================================================================= -->
   <section class="story-page" id="page-9" data-page="9">
-
     <div class="slideshow-view" id="slideshow-9">
       <div class="slide-viewport">
         <div class="slide-item active" style="background-image: url('images/panels/p9_1.jpg');"></div>
         <div class="slide-item" style="background-image: url('images/panels/p9_2.jpg');"></div>
         <div class="slide-item" style="background-image: url('images/panels/p9_3.jpg');"></div>
       </div>
-      <div class="slide-progress-track">
-        <div class="slide-progress-bar" id="progress-9"></div>
-      </div>
+      <div class="slide-progress-track"><div class="slide-progress-bar" id="progress-9"></div></div>
       <button class="slide-nav-btn prev-btn" onclick="prevSlide(9)">‹</button>
       <button class="slide-nav-btn next-btn" onclick="nextSlide(9)">›</button>
       <div class="slide-bullets" id="bullets-9"></div>
     </div>
 
     <div class="mosaic-grid hidden" id="grid-9">
-      <div class="panel-card" data-index="0" title="1. Daniel dans la fosse aux lions"><img src="images/panels/p9_1.jpg" alt="" loading="lazy"><span class="panel-tag">I</span></div>
-      <div class="panel-card" data-index="1" title="2. Les trois hébreux dans la fournaise ardente"><img src="images/panels/p9_2.jpg" alt="" loading="lazy"><span class="panel-tag">II</span></div>
-      <div class="panel-card" data-index="2" title="3. L'écriture sur le mur / festin de Balthasar"><img src="images/panels/p9_3.jpg" alt="" loading="lazy"><span class="panel-tag">III</span></div>
+      <div class="panel-card" data-index="0" title="p9_1 Décret de Cyrus et reconstruction du Temple"><img src="images/panels/p9_1.jpg" alt="" loading="lazy"><span class="panel-tag">I</span></div>
+      <div class="panel-card" data-index="1" title="p9_2 Néhémie relève les murailles en 52 jours"><img src="images/panels/p9_2.jpg" alt="" loading="lazy"><span class="panel-tag">II</span></div>
+      <div class="panel-card" data-index="2" title="p9_3 Lecture solennelle de la Loi par Esdras et Malachie"><img src="images/panels/p9_3.jpg" alt="" loading="lazy"><span class="panel-tag">III</span></div>
     </div>
 
+    <!-- Password Gate (Esprit) -->
     <div class="floating-gate">
       <form class="gate-form" id="form-gate-9" onsubmit="return false;">
         <span class="lock-glyph">🔒</span>
@@ -512,31 +385,364 @@
   </section>
 
   <!-- =========================================================================
-       PAGE 10 : ESDRAS, NÉHÉMIE & ESTHER
+       PAGE 10 : ESTHER
        ========================================================================= -->
   <section class="story-page" id="page-10" data-page="10">
-
     <div class="slideshow-view" id="slideshow-10">
       <div class="slide-viewport">
         <div class="slide-item active" style="background-image: url('images/panels/p10_1.jpg');"></div>
         <div class="slide-item" style="background-image: url('images/panels/p10_2.jpg');"></div>
         <div class="slide-item" style="background-image: url('images/panels/p10_3.jpg');"></div>
       </div>
-      <div class="slide-progress-track">
-        <div class="slide-progress-bar" id="progress-10"></div>
-      </div>
+      <div class="slide-progress-track"><div class="slide-progress-bar" id="progress-10"></div></div>
       <button class="slide-nav-btn prev-btn" onclick="prevSlide(10)">‹</button>
       <button class="slide-nav-btn next-btn" onclick="nextSlide(10)">›</button>
       <div class="slide-bullets" id="bullets-10"></div>
     </div>
 
     <div class="mosaic-grid hidden" id="grid-10">
-      <div class="panel-card" data-index="0" title="1. Esther devant le roi Assuérus"><img src="images/panels/p10_1.jpg" alt="" loading="lazy"><span class="panel-tag">I</span></div>
-      <div class="panel-card" data-index="1" title="2. Néhémie reconstruisant les murs de Jérusalem"><img src="images/panels/p10_2.jpg" alt="" loading="lazy"><span class="panel-tag">II</span></div>
-      <div class="panel-card" data-index="2" title="3. Esdras lisant la Loi au peuple"><img src="images/panels/p10_3.jpg" alt="" loading="lazy"><span class="panel-tag">III</span></div>
+      <div class="panel-card" data-index="0" title="p10_1 Esther couronnée reine par Assuérus"><img src="images/panels/p10_1.jpg" alt="" loading="lazy"><span class="panel-tag">I</span></div>
+      <div class="panel-card" data-index="1" title="p10_2 Mardochée et le complot d'Haman déjoué"><img src="images/panels/p10_2.jpg" alt="" loading="lazy"><span class="panel-tag">II</span></div>
+      <div class="panel-card" data-index="2" title="p10_3 Esther intercède au banquet et sauve son peuple"><img src="images/panels/p10_3.jpg" alt="" loading="lazy"><span class="panel-tag">III</span></div>
     </div>
 
-    <!-- Page 10 : pas de mot de passe, bouton Recommencer -->
+    <!-- Password Gate (Messager) -->
+    <div class="floating-gate">
+      <form class="gate-form" id="form-gate-10" onsubmit="return false;">
+        <span class="lock-glyph">🔒</span>
+        <input type="text" id="pass-10" class="gate-input" placeholder="Mot de passe..." autocomplete="off" spellcheck="false">
+        <button type="submit" class="gate-btn" title="Valider">➜</button>
+      </form>
+      <div class="gate-status" id="feedback-10"></div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       PAGE 11 : MATTHIEU, MARC, LUC, JEAN (NOUVEAU TESTAMENT)
+       ========================================================================= -->
+  <section class="story-page" id="page-11" data-page="11">
+    <div class="slideshow-view" id="slideshow-11">
+      <div class="slide-viewport">
+        <div class="slide-item active" style="background-image: url('images/panels/p11_1.jpg');">
+          <div class="slide-placeholder"><span class="ph-id">p11_1</span><span class="ph-desc">Naissance de Jésus à Bethléem et baptême au Jourdain</span></div>
+        </div>
+        <div class="slide-item" style="background-image: url('images/panels/p11_2.jpg');">
+          <div class="slide-placeholder"><span class="ph-id">p11_2</span><span class="ph-desc">Ministère, miracles et résurrection de Lazare</span></div>
+        </div>
+        <div class="slide-item" style="background-image: url('images/panels/p11_3.jpg');">
+          <div class="slide-placeholder"><span class="ph-id">p11_3</span><span class="ph-desc">Crucifixion, tombeau vide et résurrection glorieuse</span></div>
+        </div>
+      </div>
+      <div class="slide-progress-track"><div class="slide-progress-bar" id="progress-11"></div></div>
+      <button class="slide-nav-btn prev-btn" onclick="prevSlide(11)">‹</button>
+      <button class="slide-nav-btn next-btn" onclick="nextSlide(11)">›</button>
+      <div class="slide-bullets" id="bullets-11"></div>
+    </div>
+
+    <div class="mosaic-grid hidden" id="grid-11">
+      <div class="panel-card" data-index="0" title="p11_1 Naissance et baptême de Jésus">
+        <div class="card-placeholder"><span class="cph-id">p11_1</span><span class="cph-desc">Naissance & baptême</span></div>
+        <span class="panel-tag">I</span>
+      </div>
+      <div class="panel-card" data-index="1" title="p11_2 Ministère et miracles">
+        <div class="card-placeholder"><span class="cph-id">p11_2</span><span class="cph-desc">Ministère & miracles</span></div>
+        <span class="panel-tag">II</span>
+      </div>
+      <div class="panel-card" data-index="2" title="p11_3 Crucifixion et Résurrection">
+        <div class="card-placeholder"><span class="cph-id">p11_3</span><span class="cph-desc">Croix & Résurrection</span></div>
+        <span class="panel-tag">III</span>
+      </div>
+    </div>
+
+    <!-- Password Gate (Nations) -->
+    <div class="floating-gate">
+      <form class="gate-form" id="form-gate-11" onsubmit="return false;">
+        <span class="lock-glyph">🔒</span>
+        <input type="text" id="pass-11" class="gate-input" placeholder="Mot de passe..." autocomplete="off" spellcheck="false">
+        <button type="submit" class="gate-btn" title="Valider">➜</button>
+      </form>
+      <div class="gate-status" id="feedback-11"></div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       PAGE 12 : ACTES DES APÔTRES (CH. 1 À 12) + JACQUES
+       ========================================================================= -->
+  <section class="story-page" id="page-12" data-page="12">
+    <div class="slideshow-view" id="slideshow-12">
+      <div class="slide-viewport">
+        <div class="slide-item active" style="background-image: url('images/panels/p12_1.jpg');">
+          <div class="slide-placeholder"><span class="ph-id">p12_1</span><span class="ph-desc">La Pentecôte et naissance de la première Église</span></div>
+        </div>
+        <div class="slide-item" style="background-image: url('images/panels/p12_2.jpg');">
+          <div class="slide-placeholder"><span class="ph-id">p12_2</span><span class="ph-desc">Persécution, dispersion et lettre de Jacques</span></div>
+        </div>
+        <div class="slide-item" style="background-image: url('images/panels/p12_3.jpg');">
+          <div class="slide-placeholder"><span class="ph-id">p12_3</span><span class="ph-desc">Conversion de Saul sur le chemin de Damas</span></div>
+        </div>
+      </div>
+      <div class="slide-progress-track"><div class="slide-progress-bar" id="progress-12"></div></div>
+      <button class="slide-nav-btn prev-btn" onclick="prevSlide(12)">‹</button>
+      <button class="slide-nav-btn next-btn" onclick="nextSlide(12)">›</button>
+      <div class="slide-bullets" id="bullets-12"></div>
+    </div>
+
+    <div class="mosaic-grid hidden" id="grid-12">
+      <div class="panel-card" data-index="0" title="p12_1 La Pentecôte">
+        <div class="card-placeholder"><span class="cph-id">p12_1</span><span class="cph-desc">La Pentecôte</span></div>
+        <span class="panel-tag">I</span>
+      </div>
+      <div class="panel-card" data-index="1" title="p12_2 Dispersion et épître de Jacques">
+        <div class="card-placeholder"><span class="cph-id">p12_2</span><span class="cph-desc">Jacques & foi vivante</span></div>
+        <span class="panel-tag">II</span>
+      </div>
+      <div class="panel-card" data-index="2" title="p12_3 Conversion de Paul à Damas">
+        <div class="card-placeholder"><span class="cph-id">p12_3</span><span class="cph-desc">Conversion de Paul</span></div>
+        <span class="panel-tag">III</span>
+      </div>
+    </div>
+
+    <!-- Password Gate (Tâche) -->
+    <div class="floating-gate">
+      <form class="gate-form" id="form-gate-12" onsubmit="return false;">
+        <span class="lock-glyph">🔒</span>
+        <input type="text" id="pass-12" class="gate-input" placeholder="Mot de passe..." autocomplete="off" spellcheck="false">
+        <button type="submit" class="gate-btn" title="Valider">➜</button>
+      </form>
+      <div class="gate-status" id="feedback-12"></div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       PAGE 13 : ACTES (CH. 13 À 18) + GALATES, 1 & 2 THESSALONICIENS
+       ========================================================================= -->
+  <section class="story-page" id="page-13" data-page="13">
+    <div class="slideshow-view" id="slideshow-13">
+      <div class="slide-viewport">
+        <div class="slide-item active" style="background-image: url('images/panels/p13_1.jpg');">
+          <div class="slide-placeholder"><span class="ph-id">p13_1</span><span class="ph-desc">Premier voyage missionnaire de Paul et Barnabas</span></div>
+        </div>
+        <div class="slide-item" style="background-image: url('images/panels/p13_2.jpg');">
+          <div class="slide-placeholder"><span class="ph-id">p13_2</span><span class="ph-desc">Concile de Jérusalem et lettre aux Galates (la foi seule)</span></div>
+        </div>
+        <div class="slide-item" style="background-image: url('images/panels/p13_3.jpg');">
+          <div class="slide-placeholder"><span class="ph-id">p13_3</span><span class="ph-desc">Paul en Europe (Philippes, Thessalonique, Athènes)</span></div>
+        </div>
+      </div>
+      <div class="slide-progress-track"><div class="slide-progress-bar" id="progress-13"></div></div>
+      <button class="slide-nav-btn prev-btn" onclick="prevSlide(13)">‹</button>
+      <button class="slide-nav-btn next-btn" onclick="nextSlide(13)">›</button>
+      <div class="slide-bullets" id="bullets-13"></div>
+    </div>
+
+    <div class="mosaic-grid hidden" id="grid-13">
+      <div class="panel-card" data-index="0" title="p13_1 Premier voyage missionnaire">
+        <div class="card-placeholder"><span class="cph-id">p13_1</span><span class="cph-desc">1er voyage</span></div>
+        <span class="panel-tag">I</span>
+      </div>
+      <div class="panel-card" data-index="1" title="p13_2 Concile et Galates">
+        <div class="card-placeholder"><span class="cph-id">p13_2</span><span class="cph-desc">Galates & grâce</span></div>
+        <span class="panel-tag">II</span>
+      </div>
+      <div class="panel-card" data-index="2" title="p13_3 Évangile en Europe et Thessaloniciens">
+        <div class="card-placeholder"><span class="cph-id">p13_3</span><span class="cph-desc">Europe & espérance</span></div>
+        <span class="panel-tag">III</span>
+      </div>
+    </div>
+
+    <!-- Password Gate (Loi) -->
+    <div class="floating-gate">
+      <form class="gate-form" id="form-gate-13" onsubmit="return false;">
+        <span class="lock-glyph">🔒</span>
+        <input type="text" id="pass-13" class="gate-input" placeholder="Mot de passe..." autocomplete="off" spellcheck="false">
+        <button type="submit" class="gate-btn" title="Valider">➜</button>
+      </form>
+      <div class="gate-status" id="feedback-13"></div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       PAGE 14 : ACTES (CH. 19 À 20) + CORINTHIENS, ROMAINS
+       ========================================================================= -->
+  <section class="story-page" id="page-14" data-page="14">
+    <div class="slideshow-view" id="slideshow-14">
+      <div class="slide-viewport">
+        <div class="slide-item active" style="background-image: url('images/panels/p14_1.jpg');">
+          <div class="slide-placeholder"><span class="ph-id">p14_1</span><span class="ph-desc">Paul à Éphèse (troisième voyage missionnaire)</span></div>
+        </div>
+        <div class="slide-item" style="background-image: url('images/panels/p14_2.jpg');">
+          <div class="slide-placeholder"><span class="ph-id">p14_2</span><span class="ph-desc">1 & 2 Corinthiens (la croix et la force dans la faiblesse)</span></div>
+        </div>
+        <div class="slide-item" style="background-image: url('images/panels/p14_3.jpg');">
+          <div class="slide-placeholder"><span class="ph-id">p14_3</span><span class="ph-desc">L'épître aux Romains : le salut offert par grâce</span></div>
+        </div>
+      </div>
+      <div class="slide-progress-track"><div class="slide-progress-bar" id="progress-14"></div></div>
+      <button class="slide-nav-btn prev-btn" onclick="prevSlide(14)">‹</button>
+      <button class="slide-nav-btn next-btn" onclick="nextSlide(14)">›</button>
+      <div class="slide-bullets" id="bullets-14"></div>
+    </div>
+
+    <div class="mosaic-grid hidden" id="grid-14">
+      <div class="panel-card" data-index="0" title="p14_1 Paul à Éphèse">
+        <div class="card-placeholder"><span class="cph-id">p14_1</span><span class="cph-desc">Séjour à Éphèse</span></div>
+        <span class="panel-tag">I</span>
+      </div>
+      <div class="panel-card" data-index="1" title="p14_2 Épîtres aux Corinthiens">
+        <div class="card-placeholder"><span class="cph-id">p14_2</span><span class="cph-desc">Corinthiens</span></div>
+        <span class="panel-tag">II</span>
+      </div>
+      <div class="panel-card" data-index="2" title="p14_3 Épître aux Romains">
+        <div class="card-placeholder"><span class="cph-id">p14_3</span><span class="cph-desc">Romains</span></div>
+        <span class="panel-tag">III</span>
+      </div>
+    </div>
+
+    <!-- Password Gate (Amour) -->
+    <div class="floating-gate">
+      <form class="gate-form" id="form-gate-14" onsubmit="return false;">
+        <span class="lock-glyph">🔒</span>
+        <input type="text" id="pass-14" class="gate-input" placeholder="Mot de passe..." autocomplete="off" spellcheck="false">
+        <button type="submit" class="gate-btn" title="Valider">➜</button>
+      </form>
+      <div class="gate-status" id="feedback-14"></div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       PAGE 15 : ACTES (CH. 21 À 28) + ÉPÎTRES DE PRISON
+       ========================================================================= -->
+  <section class="story-page" id="page-15" data-page="15">
+    <div class="slideshow-view" id="slideshow-15">
+      <div class="slide-viewport">
+        <div class="slide-item active" style="background-image: url('images/panels/p15_1.jpg');">
+          <div class="slide-placeholder"><span class="ph-id">p15_1</span><span class="ph-desc">Arrestation à Jérusalem et comparution devant les gouverneurs</span></div>
+        </div>
+        <div class="slide-item" style="background-image: url('images/panels/p15_2.jpg');">
+          <div class="slide-placeholder"><span class="ph-id">p15_2</span><span class="ph-desc">Tempête, naufrage à Malte et arrivée à Rome</span></div>
+        </div>
+        <div class="slide-item" style="background-image: url('images/panels/p15_3.jpg');">
+          <div class="slide-placeholder"><span class="ph-id">p15_3</span><span class="ph-desc">Captivité romaine et épîtres de prison (Éphésiens, Philippiens, Colossiens)</span></div>
+        </div>
+      </div>
+      <div class="slide-progress-track"><div class="slide-progress-bar" id="progress-15"></div></div>
+      <button class="slide-nav-btn prev-btn" onclick="prevSlide(15)">‹</button>
+      <button class="slide-nav-btn next-btn" onclick="nextSlide(15)">›</button>
+      <div class="slide-bullets" id="bullets-15"></div>
+    </div>
+
+    <div class="mosaic-grid hidden" id="grid-15">
+      <div class="panel-card" data-index="0" title="p15_1 Arrestation et procès de Paul">
+        <div class="card-placeholder"><span class="cph-id">p15_1</span><span class="cph-desc">Arrestation & procès</span></div>
+        <span class="panel-tag">I</span>
+      </div>
+      <div class="panel-card" data-index="1" title="p15_2 Naufrage à Malte et route vers Rome">
+        <div class="card-placeholder"><span class="cph-id">p15_2</span><span class="cph-desc">Naufrage & Rome</span></div>
+        <span class="panel-tag">II</span>
+      </div>
+      <div class="panel-card" data-index="2" title="p15_3 Les épîtres de captivité">
+        <div class="card-placeholder"><span class="cph-id">p15_3</span><span class="cph-desc">Lettres de prison</span></div>
+        <span class="panel-tag">III</span>
+      </div>
+    </div>
+
+    <!-- Password Gate (Terme) -->
+    <div class="floating-gate">
+      <form class="gate-form" id="form-gate-15" onsubmit="return false;">
+        <span class="lock-glyph">🔒</span>
+        <input type="text" id="pass-15" class="gate-input" placeholder="Mot de passe..." autocomplete="off" spellcheck="false">
+        <button type="submit" class="gate-btn" title="Valider">➜</button>
+      </form>
+      <div class="gate-status" id="feedback-15"></div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       PAGE 16 : PASTORALES, HÉBREUX, PIERRE, JUDE
+       ========================================================================= -->
+  <section class="story-page" id="page-16" data-page="16">
+    <div class="slideshow-view" id="slideshow-16">
+      <div class="slide-viewport">
+        <div class="slide-item active" style="background-image: url('images/panels/p16_1.jpg');">
+          <div class="slide-placeholder"><span class="ph-id">p16_1</span><span class="ph-desc">Épîtres pastorales : Timothée et Tite</span></div>
+        </div>
+        <div class="slide-item" style="background-image: url('images/panels/p16_2.jpg');">
+          <div class="slide-placeholder"><span class="ph-id">p16_2</span><span class="ph-desc">Épître aux Hébreux : Jésus supérieur à tout</span></div>
+        </div>
+        <div class="slide-item" style="background-image: url('images/panels/p16_3.jpg');">
+          <div class="slide-placeholder"><span class="ph-id">p16_3</span><span class="ph-desc">1 & 2 Pierre, Jude : espérance vive et mise en garde</span></div>
+        </div>
+      </div>
+      <div class="slide-progress-track"><div class="slide-progress-bar" id="progress-16"></div></div>
+      <button class="slide-nav-btn prev-btn" onclick="prevSlide(16)">‹</button>
+      <button class="slide-nav-btn next-btn" onclick="nextSlide(16)">›</button>
+      <div class="slide-bullets" id="bullets-16"></div>
+    </div>
+
+    <div class="mosaic-grid hidden" id="grid-16">
+      <div class="panel-card" data-index="0" title="p16_1 Les lettres pastorales">
+        <div class="card-placeholder"><span class="cph-id">p16_1</span><span class="cph-desc">Pastorales</span></div>
+        <span class="panel-tag">I</span>
+      </div>
+      <div class="panel-card" data-index="1" title="p16_2 L'épître aux Hébreux">
+        <div class="card-placeholder"><span class="cph-id">p16_2</span><span class="cph-desc">Hébreux</span></div>
+        <span class="panel-tag">II</span>
+      </div>
+      <div class="panel-card" data-index="2" title="p16_3 Les lettres de Pierre et Jude">
+        <div class="card-placeholder"><span class="cph-id">p16_3</span><span class="cph-desc">Pierre & Jude</span></div>
+        <span class="panel-tag">III</span>
+      </div>
+    </div>
+
+    <!-- Password Gate (Repentance) -->
+    <div class="floating-gate">
+      <form class="gate-form" id="form-gate-16" onsubmit="return false;">
+        <span class="lock-glyph">🔒</span>
+        <input type="text" id="pass-16" class="gate-input" placeholder="Mot de passe..." autocomplete="off" spellcheck="false">
+        <button type="submit" class="gate-btn" title="Valider">➜</button>
+      </form>
+      <div class="gate-status" id="feedback-16"></div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       PAGE 17 : 1, 2, 3 JEAN + APOCALYPSE
+       ========================================================================= -->
+  <section class="story-page" id="page-17" data-page="17">
+    <div class="slideshow-view" id="slideshow-17">
+      <div class="slide-viewport">
+        <div class="slide-item active" style="background-image: url('images/panels/p17_1.jpg');">
+          <div class="slide-placeholder"><span class="ph-id">p17_1</span><span class="ph-desc">Les épîtres de Jean à Éphèse : « Dieu est amour »</span></div>
+        </div>
+        <div class="slide-item" style="background-image: url('images/panels/p17_2.jpg');">
+          <div class="slide-placeholder"><span class="ph-id">p17_2</span><span class="ph-desc">Jean à Patmos : le trône céleste, le Lion et l'Agneau</span></div>
+        </div>
+        <div class="slide-item" style="background-image: url('images/panels/p17_3.jpg');">
+          <div class="slide-placeholder"><span class="ph-id">p17_3</span><span class="ph-desc">Le retour du Christ Roi et la Nouvelle Jérusalem</span></div>
+        </div>
+      </div>
+      <div class="slide-progress-track"><div class="slide-progress-bar" id="progress-17"></div></div>
+      <button class="slide-nav-btn prev-btn" onclick="prevSlide(17)">‹</button>
+      <button class="slide-nav-btn next-btn" onclick="nextSlide(17)">›</button>
+      <div class="slide-bullets" id="bullets-17"></div>
+    </div>
+
+    <div class="mosaic-grid hidden" id="grid-17">
+      <div class="panel-card" data-index="0" title="p17_1 Les lettres de Jean">
+        <div class="card-placeholder"><span class="cph-id">p17_1</span><span class="cph-desc">1, 2, 3 Jean</span></div>
+        <span class="panel-tag">I</span>
+      </div>
+      <div class="panel-card" data-index="1" title="p17_2 Visions célestes de l'Apocalypse">
+        <div class="card-placeholder"><span class="cph-id">p17_2</span><span class="cph-desc">L'Agneau digne</span></div>
+        <span class="panel-tag">II</span>
+      </div>
+      <div class="panel-card" data-index="2" title="p17_3 La Nouvelle Jérusalem">
+        <div class="card-placeholder"><span class="cph-id">p17_3</span><span class="cph-desc">Nouvelle Jérusalem</span></div>
+        <span class="panel-tag">III</span>
+      </div>
+    </div>
+
+    <!-- Dernière page : Recommencer -->
     <div class="floating-gate">
       <button class="replay-btn" onclick="goToPage(1)">
         <span>⟲ Recommencer</span>

@@ -1,12 +1,15 @@
 /* ==========================================================================
-   LA GRANDE HISTOIRE - 15-SECOND AUTOMATIC SLIDESHOW & PROGRESSION
+   LA GRANDE HISTOIRE - 15-SECOND AUTOMATIC SLIDESHOW & PROGRESSION (PAGES 1-17)
    ========================================================================== */
 
 const state = {
   currentPage: 1,
   unlockedPages: [1],
   currentMode: 'slideshow', // Default directly to slideshow
-  currentSlide: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0 },
+  currentSlide: {
+    1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0,
+    11: 0, 12: 0, 13: 0, 14: 0, 15: 0, 16: 0, 17: 0
+  },
   passwords: {
     1: 'peuple',
     2: 'repos',
@@ -17,7 +20,13 @@ const state = {
     7: 'Espérance',
     8: 'Homme',
     9: 'Esprit',
-    10: 'Messager'
+    10: 'Messager',
+    11: 'Nations',
+    12: 'Tâche',
+    13: 'Loi',
+    14: 'Amour',
+    15: 'Terme',
+    16: 'Repentance'
   }
 };
 
@@ -53,7 +62,7 @@ function updateProgressBar() {
   }
 
   if (elapsed >= SLIDE_DURATION) {
-    if (state.currentMode === 'slideshow' && state.currentPage <= 10) {
+    if (state.currentMode === 'slideshow' && state.currentPage <= 17) {
       nextSlide(state.currentPage, false); // auto next
     }
     resetSlideTimer();
@@ -63,7 +72,7 @@ function updateProgressBar() {
 }
 
 // --------------------------------------------------------------------------
-// View Mode Switcher (Slideshow vs Grid 9)
+// View Mode Switcher (Slideshow vs Grid)
 // --------------------------------------------------------------------------
 const modeGridBtn = document.getElementById('mode-grid-btn');
 const modeSlideBtn = document.getElementById('mode-slide-btn');
@@ -71,13 +80,13 @@ const modeSlideBtn = document.getElementById('mode-slide-btn');
 function setViewMode(mode) {
   state.currentMode = mode;
   if (mode === 'grid') {
-    modeGridBtn.classList.add('active');
-    modeSlideBtn.classList.remove('active');
+    if (modeGridBtn) modeGridBtn.classList.add('active');
+    if (modeSlideBtn) modeSlideBtn.classList.remove('active');
     document.querySelectorAll('.mosaic-grid').forEach(el => el.classList.remove('hidden'));
     document.querySelectorAll('.slideshow-view').forEach(el => el.classList.add('hidden'));
   } else {
-    modeSlideBtn.classList.add('active');
-    modeGridBtn.classList.remove('active');
+    if (modeSlideBtn) modeSlideBtn.classList.add('active');
+    if (modeGridBtn) modeGridBtn.classList.remove('active');
     document.querySelectorAll('.mosaic-grid').forEach(el => el.classList.add('hidden'));
     document.querySelectorAll('.slideshow-view').forEach(el => el.classList.remove('hidden'));
     resetSlideTimer();
@@ -90,7 +99,7 @@ if (modeGridBtn && modeSlideBtn) {
   modeSlideBtn.addEventListener('click', () => setViewMode('slideshow'));
 }
 
-// Clicking any card in the 9-grid zooms directly into the slideshow
+// Clicking any card in the grid zooms directly into the slideshow
 document.querySelectorAll('.panel-card').forEach(card => {
   card.addEventListener('click', () => {
     const index = parseInt(card.getAttribute('data-index'), 10) || 0;
@@ -102,9 +111,14 @@ document.querySelectorAll('.panel-card').forEach(card => {
 // --------------------------------------------------------------------------
 // Slideshow Navigation (Next, Prev, Bullets)
 // --------------------------------------------------------------------------
-function setupBullets(pageNum, count = 9) {
+function getSlidesCount(pageNum) {
+  return pageNum <= 2 ? 9 : 3;
+}
+
+function setupBullets(pageNum) {
   const container = document.getElementById(`bullets-${pageNum}`);
   if (!container) return;
+  const count = getSlidesCount(pageNum);
   container.innerHTML = '';
   for (let i = 0; i < count; i++) {
     const dot = document.createElement('span');
@@ -119,7 +133,7 @@ function setupBullets(pageNum, count = 9) {
 }
 
 function updateSlideDisplay(pageNum) {
-  if (pageNum > 10) return;
+  if (pageNum > 17) return;
   const slideshow = document.getElementById(`slideshow-${pageNum}`);
   if (!slideshow) return;
 
@@ -144,10 +158,6 @@ function updateSlideDisplay(pageNum) {
   });
 }
 
-function getSlidesCount(pageNum) {
-  return pageNum <= 2 ? 9 : 3;
-}
-
 function prevSlide(pageNum) {
   const count = getSlidesCount(pageNum);
   state.currentSlide[pageNum] = (state.currentSlide[pageNum] - 1 + count) % count;
@@ -162,16 +172,10 @@ function nextSlide(pageNum, reset = true) {
   updateSlideDisplay(pageNum);
 }
 
-setupBullets(1);
-setupBullets(2);
-setupBullets(3, 3);
-setupBullets(4, 3);
-setupBullets(5, 3);
-setupBullets(6, 3);
-setupBullets(7, 3);
-setupBullets(8, 3);
-setupBullets(9, 3);
-setupBullets(10, 3);
+// Initialise bullets for all 17 pages
+for (let p = 1; p <= 17; p++) {
+  setupBullets(p);
+}
 
 // Keyboard arrow navigation
 window.addEventListener('keydown', (e) => {
@@ -185,7 +189,7 @@ window.addEventListener('keydown', (e) => {
 // Page Navigation & Password Gate
 // --------------------------------------------------------------------------
 function updateUI() {
-  for (let p = 1; p <= 10; p++) {
+  for (let p = 1; p <= 17; p++) {
     const pageEl = document.getElementById(`page-${p}`);
     const dotBtn = document.querySelector(`.dot-btn[data-page="${p}"]`);
 
@@ -300,24 +304,8 @@ function handleGateSubmit(fromPage) {
   }
 }
 
-// Form listeners
-const form1 = document.getElementById('form-gate-1');
-if (form1) {
-  form1.addEventListener('submit', (e) => {
-    e.preventDefault();
-    handleGateSubmit(1);
-  });
-}
-
-const form2 = document.getElementById('form-gate-2');
-if (form2) {
-  form2.addEventListener('submit', (e) => {
-    e.preventDefault();
-    handleGateSubmit(2);
-  });
-}
-
-for (let p = 3; p <= 9; p++) {
+// Form listeners for all pages with password gates (1 to 16)
+for (let p = 1; p <= 16; p++) {
   const form = document.getElementById(`form-gate-${p}`);
   if (form) {
     form.addEventListener('submit', (e) => {
