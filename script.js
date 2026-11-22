@@ -1,10 +1,12 @@
 /* ==========================================================================
-   LA GRANDE HISTOIRE - PURE VISUAL & MOTION SCRIPT
+   LA GRANDE HISTOIRE - FRESCO 9 & SLIDESHOW MECHANICS
    ========================================================================== */
 
 const state = {
   currentPage: 1,
   unlockedPages: [1],
+  currentMode: 'grid', // 'grid' or 'slideshow'
+  currentSlide: { 1: 0, 2: 0 },
   soundEnabled: true,
   passwords: {
     1: 'peuple',
@@ -12,9 +14,9 @@ const state = {
   }
 };
 
-// Restore saved progress
+// Restore progress
 try {
-  const saved = localStorage.getItem('lgh_vis_unlocked');
+  const saved = localStorage.getItem('lgh_fresco_unlocked');
   if (saved) {
     const parsed = JSON.parse(saved);
     if (Array.isArray(parsed)) {
@@ -24,7 +26,7 @@ try {
 } catch (e) {}
 
 // --------------------------------------------------------------------------
-// Audio System (Synthesized Ambient / Chimes)
+// Audio Synthesizer (Chime & Error)
 // --------------------------------------------------------------------------
 let audioCtx = null;
 
@@ -44,8 +46,7 @@ function playUnlockSound() {
     initAudio();
     if (!audioCtx) return;
 
-    // Harmonic triumphant chord
-    const freqs = [261.63, 329.63, 392.00, 523.25, 659.25]; // C major 7th / 9th
+    const freqs = [349.23, 440.00, 523.25, 659.25, 783.99]; // F maj 9
     const now = audioCtx.currentTime;
 
     freqs.forEach((freq, idx) => {
@@ -56,7 +57,7 @@ function playUnlockSound() {
       osc.frequency.setValueAtTime(freq, now + idx * 0.07);
 
       gain.gain.setValueAtTime(0.001, now + idx * 0.07);
-      gain.gain.exponentialRampToValueAtTime(0.12, now + idx * 0.07 + 0.05);
+      gain.gain.exponentialRampToValueAtTime(0.12, now + idx * 0.07 + 0.04);
       gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.07 + 1.8);
 
       osc.connect(gain);
@@ -79,7 +80,7 @@ function playErrorSound() {
     const gain = audioCtx.createGain();
 
     osc.type = 'triangle';
-    osc.frequency.setValueAtTime(130, now);
+    osc.frequency.setValueAtTime(140, now);
     osc.frequency.exponentialRampToValueAtTime(65, now + 0.22);
 
     gain.gain.setValueAtTime(0.12, now);
@@ -94,209 +95,180 @@ function playErrorSound() {
 }
 
 // --------------------------------------------------------------------------
-// Multi-Layer Canvas Animations
+// Ambient Canvas Background
 // --------------------------------------------------------------------------
-const canvases = {
-  1: document.getElementById('canvas-1'),
-  2: document.getElementById('canvas-2'),
-  3: document.getElementById('canvas-3')
-};
+const canvas = document.getElementById('ambient-canvas');
+const ctx = canvas.getContext('2d');
+let width, height;
+let particles = [];
 
-const contexts = {
-  1: canvases[1].getContext('2d'),
-  2: canvases[2].getContext('2d'),
-  3: canvases[3].getContext('2d')
-};
+function resizeCanvas() {
+  width = canvas.width = window.innerWidth;
+  height = canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
 
-let width = window.innerWidth;
-let height = window.innerHeight;
-
-function resizeAll() {
-  width = window.innerWidth;
-  height = window.innerHeight;
-  for (let i = 1; i <= 3; i++) {
-    if (canvases[i]) {
-      canvases[i].width = width;
-      canvases[i].height = height;
-    }
+function initParticles() {
+  particles = [];
+  for (let i = 0; i < 60; i++) {
+    particles.push({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      size: Math.random() * 2.2 + 0.8,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4,
+      alpha: Math.random() * 0.6 + 0.2,
+      pulse: Math.random() * Math.PI * 2,
+      color: state.currentPage === 2 ? '255, 150, 50' : '245, 215, 130'
+    });
   }
 }
-window.addEventListener('resize', resizeAll);
-resizeAll();
+initParticles();
 
-// Particle Systems
-const particlesPage1 = [];
-const particlesPage2 = [];
-const particlesPage3 = [];
+function animateCanvas() {
+  ctx.clearRect(0, 0, width, height);
 
-// Page 1: Genesis Stardust & Divine Light Rays
-for (let i = 0; i < 70; i++) {
-  particlesPage1.push({
-    x: Math.random() * width,
-    y: Math.random() * height,
-    size: Math.random() * 2.5 + 0.8,
-    vx: (Math.random() - 0.5) * 0.4,
-    vy: (Math.random() - 0.5) * 0.4,
-    alpha: Math.random() * 0.7 + 0.2,
-    pulse: Math.random() * Math.PI * 2,
-    color: Math.random() > 0.4 ? '255, 230, 150' : '200, 235, 255'
-  });
-}
-
-// Page 2: Exodus Burning Bush & Pillar of Fire Embers
-for (let i = 0; i < 90; i++) {
-  particlesPage2.push({
-    x: Math.random() * width,
-    y: Math.random() * height,
-    size: Math.random() * 3 + 1,
-    vx: (Math.random() - 0.5) * 0.8,
-    vy: -(Math.random() * 1.6 + 0.6), // Floating up
-    alpha: Math.random() * 0.8 + 0.2,
-    color: Math.random() > 0.5 ? '255, 145, 45' : '255, 210, 80'
-  });
-}
-
-// Page 3: Rest & Promised Land Serene Golden Motes
-for (let i = 0; i < 60; i++) {
-  particlesPage3.push({
-    x: Math.random() * width,
-    y: Math.random() * height,
-    size: Math.random() * 3.2 + 1,
-    vx: (Math.random() - 0.5) * 0.25,
-    vy: (Math.random() - 0.5) * 0.2,
-    alpha: Math.random() * 0.6 + 0.2,
-    pulse: Math.random() * Math.PI * 2,
-    color: '250, 230, 160'
-  });
-}
-
-let tick = 0;
-
-function renderFrame() {
-  tick++;
-
-  // --- Render Page 1 (Genesis) ---
+  // Soft atmospheric radial gradient
+  const grad = ctx.createRadialGradient(width * 0.5, height * 0.5, 30, width * 0.5, height * 0.5, width * 0.7);
   if (state.currentPage === 1) {
-    const ctx = contexts[1];
-    ctx.clearRect(0, 0, width, height);
-
-    // Radiant god rays from top-center
-    const rayCount = 8;
-    const originX = width * 0.5;
-    const originY = height * 0.1;
-    for (let r = 0; r < rayCount; r++) {
-      const angle = (r / rayCount) * Math.PI + Math.sin(tick * 0.005 + r) * 0.15;
-      const rayLen = Math.max(width, height) * 1.2;
-      const x2 = originX + Math.cos(angle) * rayLen;
-      const y2 = originY + Math.sin(angle) * rayLen;
-
-      const grad = ctx.createLinearGradient(originX, originY, x2, y2);
-      grad.addColorStop(0, 'rgba(255, 240, 180, 0.12)');
-      grad.addColorStop(0.7, 'rgba(255, 220, 140, 0.03)');
-      grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-
-      ctx.beginPath();
-      ctx.moveTo(originX, originY);
-      ctx.lineTo(x2 - 80, y2);
-      ctx.lineTo(x2 + 80, y2);
-      ctx.closePath();
-      ctx.fillStyle = grad;
-      ctx.fill();
-    }
-
-    // Particles
-    particlesPage1.forEach(p => {
-      p.x += p.vx;
-      p.y += p.vy;
-      p.pulse += 0.02;
-      const currentAlpha = Math.max(0.1, p.alpha + Math.sin(p.pulse) * 0.2);
-
-      if (p.x < 0) p.x = width;
-      if (p.x > width) p.x = 0;
-      if (p.y < 0) p.y = height;
-      if (p.y > height) p.y = 0;
-
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${p.color}, ${currentAlpha})`;
-      ctx.shadowBlur = 10;
-      ctx.shadowColor = `rgba(${p.color}, 0.8)`;
-      ctx.fill();
-      ctx.shadowBlur = 0;
-    });
+    grad.addColorStop(0, 'rgba(212, 175, 55, 0.08)');
+    grad.addColorStop(1, 'rgba(0, 0, 0, 0.95)');
+  } else if (state.currentPage === 2) {
+    grad.addColorStop(0, 'rgba(200, 70, 20, 0.1)');
+    grad.addColorStop(1, 'rgba(0, 0, 0, 0.95)');
+  } else {
+    grad.addColorStop(0, 'rgba(120, 190, 140, 0.08)');
+    grad.addColorStop(1, 'rgba(0, 0, 0, 0.95)');
   }
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, width, height);
 
-  // --- Render Page 2 (Exodus & Leviticus) ---
-  else if (state.currentPage === 2) {
-    const ctx = contexts[2];
-    ctx.clearRect(0, 0, width, height);
+  // Particles
+  particles.forEach(p => {
+    p.x += p.vx;
+    p.y += p.vy;
+    p.pulse += 0.02;
+    const currentAlpha = Math.max(0.1, p.alpha + Math.sin(p.pulse) * 0.2);
 
-    // Pillar of fire aura at bottom center
-    const fireGrad = ctx.createRadialGradient(width * 0.5, height, 10, width * 0.5, height * 0.4, width * 0.5);
-    const pulseIntensity = 0.12 + Math.sin(tick * 0.04) * 0.04;
-    fireGrad.addColorStop(0, `rgba(255, 110, 20, ${pulseIntensity})`);
-    fireGrad.addColorStop(0.5, 'rgba(200, 60, 10, 0.04)');
-    fireGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-    ctx.fillStyle = fireGrad;
-    ctx.fillRect(0, 0, width, height);
+    if (p.x < 0) p.x = width;
+    if (p.x > width) p.x = 0;
+    if (p.y < 0) p.y = height;
+    if (p.y > height) p.y = 0;
 
-    // Rising burning sparks
-    particlesPage2.forEach(p => {
-      p.x += p.vx + Math.sin(tick * 0.02 + p.y * 0.01) * 0.4;
-      p.y += p.vy;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${p.color}, ${currentAlpha})`;
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = `rgba(${p.color}, 0.8)`;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  });
 
-      if (p.y < -10) {
-        p.y = height + 10;
-        p.x = width * 0.3 + Math.random() * (width * 0.4);
-      }
-
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${p.color}, ${p.alpha})`;
-      ctx.shadowBlur = 12;
-      ctx.shadowColor = `rgba(${p.color}, 0.9)`;
-      ctx.fill();
-      ctx.shadowBlur = 0;
-    });
-  }
-
-  // --- Render Page 3 (Rest & Promised Land) ---
-  else if (state.currentPage === 3) {
-    const ctx = contexts[3];
-    ctx.clearRect(0, 0, width, height);
-
-    // Soft celestial golden aura
-    const restGrad = ctx.createRadialGradient(width * 0.5, height * 0.5, 40, width * 0.5, height * 0.5, width * 0.65);
-    restGrad.addColorStop(0, 'rgba(255, 235, 160, 0.09)');
-    restGrad.addColorStop(0.7, 'rgba(212, 175, 55, 0.02)');
-    restGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-    ctx.fillStyle = restGrad;
-    ctx.fillRect(0, 0, width, height);
-
-    particlesPage3.forEach(p => {
-      p.x += p.vx;
-      p.y += p.vy;
-      p.pulse += 0.015;
-      const currentAlpha = Math.max(0.1, p.alpha + Math.sin(p.pulse) * 0.2);
-
-      if (p.x < 0) p.x = width;
-      if (p.x > width) p.x = 0;
-      if (p.y < 0) p.y = height;
-      if (p.y > height) p.y = 0;
-
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${p.color}, ${currentAlpha})`;
-      ctx.shadowBlur = 12;
-      ctx.shadowColor = 'rgba(255, 230, 160, 0.8)';
-      ctx.fill();
-      ctx.shadowBlur = 0;
-    });
-  }
-
-  requestAnimationFrame(renderFrame);
+  requestAnimationFrame(animateCanvas);
 }
-renderFrame();
+animateCanvas();
+
+// --------------------------------------------------------------------------
+// View Mode Switcher (Grid 9 vs Slideshow)
+// --------------------------------------------------------------------------
+const modeGridBtn = document.getElementById('mode-grid-btn');
+const modeSlideBtn = document.getElementById('mode-slide-btn');
+
+function setViewMode(mode) {
+  state.currentMode = mode;
+  if (mode === 'grid') {
+    modeGridBtn.classList.add('active');
+    modeSlideBtn.classList.remove('active');
+    document.querySelectorAll('.mosaic-grid').forEach(el => el.classList.remove('hidden'));
+    document.querySelectorAll('.slideshow-view').forEach(el => el.classList.add('hidden'));
+  } else {
+    modeSlideBtn.classList.add('active');
+    modeGridBtn.classList.remove('active');
+    document.querySelectorAll('.mosaic-grid').forEach(el => el.classList.add('hidden'));
+    document.querySelectorAll('.slideshow-view').forEach(el => el.classList.remove('hidden'));
+    updateSlideDisplay(state.currentPage);
+  }
+}
+
+if (modeGridBtn && modeSlideBtn) {
+  modeGridBtn.addEventListener('click', () => setViewMode('grid'));
+  modeSlideBtn.addEventListener('click', () => setViewMode('slideshow'));
+}
+
+// Clicking any panel in the 9-grid zooms directly into the slideshow view on that scene!
+document.querySelectorAll('.panel-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const index = parseInt(card.getAttribute('data-index'), 10) || 0;
+    state.currentSlide[state.currentPage] = index;
+    setViewMode('slideshow');
+  });
+});
+
+// --------------------------------------------------------------------------
+// Slideshow Mechanics (9 Images enchaînées)
+// --------------------------------------------------------------------------
+function setupBullets(pageNum) {
+  const container = document.getElementById(`bullets-${pageNum}`);
+  if (!container) return;
+  container.innerHTML = '';
+  for (let i = 0; i < 9; i++) {
+    const dot = document.createElement('span');
+    dot.className = `bullet-dot ${i === state.currentSlide[pageNum] ? 'active' : ''}`;
+    dot.addEventListener('click', () => {
+      state.currentSlide[pageNum] = i;
+      updateSlideDisplay(pageNum);
+    });
+    container.appendChild(dot);
+  }
+}
+
+function updateSlideDisplay(pageNum) {
+  if (pageNum > 2) return;
+  const slideshow = document.getElementById(`slideshow-${pageNum}`);
+  if (!slideshow) return;
+
+  const slides = slideshow.querySelectorAll('.slide-item');
+  const bullets = slideshow.querySelectorAll('.bullet-dot');
+  const curIdx = state.currentSlide[pageNum];
+
+  slides.forEach((s, idx) => {
+    if (idx === curIdx) {
+      s.classList.add('active');
+    } else {
+      s.classList.remove('active');
+    }
+  });
+
+  bullets.forEach((b, idx) => {
+    if (idx === curIdx) {
+      b.classList.add('active');
+    } else {
+      b.classList.remove('active');
+    }
+  });
+}
+
+function prevSlide(pageNum) {
+  state.currentSlide[pageNum] = (state.currentSlide[pageNum] - 1 + 9) % 9;
+  updateSlideDisplay(pageNum);
+}
+
+function nextSlide(pageNum) {
+  state.currentSlide[pageNum] = (state.currentSlide[pageNum] + 1) % 9;
+  updateSlideDisplay(pageNum);
+}
+
+setupBullets(1);
+setupBullets(2);
+
+// Keyboard arrow navigation
+window.addEventListener('keydown', (e) => {
+  if (state.currentMode === 'slideshow') {
+    if (e.key === 'ArrowLeft') prevSlide(state.currentPage);
+    if (e.key === 'ArrowRight') nextSlide(state.currentPage);
+  }
+});
 
 // --------------------------------------------------------------------------
 // Navigation & Password Gate Logic
@@ -319,11 +291,9 @@ function updateUI() {
       if (isUnlocked) {
         dotBtn.classList.remove('locked');
         dotBtn.removeAttribute('disabled');
-        dotBtn.title = `Chapitre ${['I', 'II', 'III'][p - 1]}`;
       } else {
         dotBtn.classList.add('locked');
         dotBtn.setAttribute('disabled', 'true');
-        dotBtn.title = `Chapitre ${['I', 'II', 'III'][p - 1]} (Verrouillé)`;
       }
 
       if (p === state.currentPage) {
@@ -332,6 +302,11 @@ function updateUI() {
         dotBtn.classList.remove('active');
       }
     }
+  }
+
+  initParticles();
+  if (state.currentMode === 'slideshow') {
+    updateSlideDisplay(state.currentPage);
   }
 }
 
@@ -356,7 +331,6 @@ function goToPage(pageNum) {
   updateUI();
 }
 
-// Dots navigation click
 document.querySelectorAll('.dot-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const page = parseInt(btn.getAttribute('data-page'), 10);
@@ -364,7 +338,6 @@ document.querySelectorAll('.dot-btn').forEach(btn => {
   });
 });
 
-// String cleaner helper
 function cleanString(str) {
   if (!str) return '';
   return str
@@ -386,18 +359,17 @@ function handleGateSubmit(fromPage) {
   const target = cleanString(expectedWord);
 
   if (entered === target) {
-    // Correct password
     const nextPage = fromPage + 1;
     if (!state.unlockedPages.includes(nextPage)) {
       state.unlockedPages.push(nextPage);
       try {
-        localStorage.setItem('lgh_vis_unlocked', JSON.stringify(state.unlockedPages));
+        localStorage.setItem('lgh_fresco_unlocked', JSON.stringify(state.unlockedPages));
       } catch (e) {}
     }
 
     if (feedbackEl) {
       feedbackEl.textContent = '✨';
-      feedbackEl.className = 'feedback-msg success';
+      feedbackEl.className = 'gate-status success';
     }
 
     playUnlockSound();
@@ -408,10 +380,9 @@ function handleGateSubmit(fromPage) {
       if (feedbackEl) feedbackEl.textContent = '';
     });
   } else {
-    // Incorrect password
     if (feedbackEl) {
       feedbackEl.textContent = 'Le sceau résiste...';
-      feedbackEl.className = 'feedback-msg error';
+      feedbackEl.className = 'gate-status error';
     }
     playErrorSound();
 
@@ -446,9 +417,8 @@ if (soundBtn && soundIcon) {
     initAudio();
     state.soundEnabled = !state.soundEnabled;
     soundIcon.textContent = state.soundEnabled ? '🔊' : '🔇';
-    soundBtn.title = state.soundEnabled ? 'Désactiver le son' : 'Activer le son';
   });
 }
 
-// Initial UI sync
+// First sync
 updateUI();
