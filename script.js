@@ -6,10 +6,18 @@ const state = {
   currentPage: 1,
   unlockedPages: [1],
   currentMode: 'slideshow', // Default directly to slideshow
-  currentSlide: { 1: 0, 2: 0 },
+  currentSlide: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0 },
   passwords: {
     1: 'peuple',
-    2: 'repos'
+    2: 'repos',
+    3: 'devant',
+    4: 'David',
+    5: 'Toujours',
+    6: 'Juda',
+    7: 'Espérance',
+    8: 'Homme',
+    9: 'Esprit',
+    10: 'Messager'
   }
 };
 
@@ -45,7 +53,7 @@ function updateProgressBar() {
   }
 
   if (elapsed >= SLIDE_DURATION) {
-    if (state.currentMode === 'slideshow' && state.currentPage <= 2) {
+    if (state.currentMode === 'slideshow' && state.currentPage <= 10) {
       nextSlide(state.currentPage, false); // auto next
     }
     resetSlideTimer();
@@ -94,11 +102,11 @@ document.querySelectorAll('.panel-card').forEach(card => {
 // --------------------------------------------------------------------------
 // Slideshow Navigation (Next, Prev, Bullets)
 // --------------------------------------------------------------------------
-function setupBullets(pageNum) {
+function setupBullets(pageNum, count = 9) {
   const container = document.getElementById(`bullets-${pageNum}`);
   if (!container) return;
   container.innerHTML = '';
-  for (let i = 0; i < 9; i++) {
+  for (let i = 0; i < count; i++) {
     const dot = document.createElement('span');
     dot.className = `bullet-dot ${i === state.currentSlide[pageNum] ? 'active' : ''}`;
     dot.addEventListener('click', () => {
@@ -111,7 +119,7 @@ function setupBullets(pageNum) {
 }
 
 function updateSlideDisplay(pageNum) {
-  if (pageNum > 2) return;
+  if (pageNum > 10) return;
   const slideshow = document.getElementById(`slideshow-${pageNum}`);
   if (!slideshow) return;
 
@@ -136,20 +144,34 @@ function updateSlideDisplay(pageNum) {
   });
 }
 
+function getSlidesCount(pageNum) {
+  return pageNum <= 2 ? 9 : 3;
+}
+
 function prevSlide(pageNum) {
-  state.currentSlide[pageNum] = (state.currentSlide[pageNum] - 1 + 9) % 9;
+  const count = getSlidesCount(pageNum);
+  state.currentSlide[pageNum] = (state.currentSlide[pageNum] - 1 + count) % count;
   resetSlideTimer();
   updateSlideDisplay(pageNum);
 }
 
 function nextSlide(pageNum, reset = true) {
-  state.currentSlide[pageNum] = (state.currentSlide[pageNum] + 1) % 9;
+  const count = getSlidesCount(pageNum);
+  state.currentSlide[pageNum] = (state.currentSlide[pageNum] + 1) % count;
   if (reset) resetSlideTimer();
   updateSlideDisplay(pageNum);
 }
 
 setupBullets(1);
 setupBullets(2);
+setupBullets(3, 3);
+setupBullets(4, 3);
+setupBullets(5, 3);
+setupBullets(6, 3);
+setupBullets(7, 3);
+setupBullets(8, 3);
+setupBullets(9, 3);
+setupBullets(10, 3);
 
 // Keyboard arrow navigation
 window.addEventListener('keydown', (e) => {
@@ -163,7 +185,7 @@ window.addEventListener('keydown', (e) => {
 // Page Navigation & Password Gate
 // --------------------------------------------------------------------------
 function updateUI() {
-  for (let p = 1; p <= 3; p++) {
+  for (let p = 1; p <= 10; p++) {
     const pageEl = document.getElementById(`page-${p}`);
     const dotBtn = document.querySelector(`.dot-btn[data-page="${p}"]`);
 
@@ -293,6 +315,16 @@ if (form2) {
     e.preventDefault();
     handleGateSubmit(2);
   });
+}
+
+for (let p = 3; p <= 9; p++) {
+  const form = document.getElementById(`form-gate-${p}`);
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      handleGateSubmit(p);
+    });
+  }
 }
 
 // Start timer loop & initial UI

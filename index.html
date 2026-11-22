@@ -38,6 +38,34 @@
       <button class="dot-btn locked" data-page="3" title="Chapitre III : Le Repos (Verrouillé)" disabled>
         <span class="dot-num">III</span>
       </button>
+      <span class="dot-line"></span>
+      <button class="dot-btn locked" data-page="4" title="Chapitre IV : Josué à Juges (Verrouillé)" disabled>
+        <span class="dot-num">IV</span>
+      </button>
+      <span class="dot-line"></span>
+      <button class="dot-btn locked" data-page="5" title="Chapitre V : Nombres (Verrouillé)" disabled>
+        <span class="dot-num">V</span>
+      </button>
+      <span class="dot-line"></span>
+      <button class="dot-btn locked" data-page="6" title="Chapitre VI : Deutéronome (Verrouillé)" disabled>
+        <span class="dot-num">VI</span>
+      </button>
+      <span class="dot-line"></span>
+      <button class="dot-btn locked" data-page="7" title="Chapitre VII : Josué (Verrouillé)" disabled>
+        <span class="dot-num">VII</span>
+      </button>
+      <span class="dot-line"></span>
+      <button class="dot-btn locked" data-page="8" title="Chapitre VIII : Juges (Verrouillé)" disabled>
+        <span class="dot-num">VIII</span>
+      </button>
+      <span class="dot-line"></span>
+      <button class="dot-btn locked" data-page="9" title="Chapitre IX : Ruth (Verrouillé)" disabled>
+        <span class="dot-num">IX</span>
+      </button>
+      <span class="dot-line"></span>
+      <button class="dot-btn locked" data-page="10" title="Chapitre X : Samuel &amp; Roi David (Verrouillé)" disabled>
+        <span class="dot-num">X</span>
+      </button>
     </nav>
   </header>
 
@@ -236,20 +264,279 @@
   </section>
 
   <!-- =========================================================================
-       PAGE 3 : LA TERRE PROMISE / LE REPOS
+       PAGE 3 : NOMBRES & DEUTÉRONOME
        ========================================================================= -->
   <section class="story-page" id="page-3" data-page="3">
-    <div class="mosaic-grid mosaic-duo" id="grid-3">
-      <div class="panel-card" data-index="0" title="Les explorateurs dans la Terre Promise">
-        <img src="images/panels/p3_1.jpg" alt="" loading="lazy">
-        <span class="panel-tag">I</span>
+
+    <!-- Slideshow View -->
+    <div class="slideshow-view" id="slideshow-3">
+      <div class="slide-viewport">
+        <div class="slide-item active" style="background-image: url('images/panels/p3_1.jpg');"></div>
+        <div class="slide-item" style="background-image: url('images/panels/p3_2.jpg');"></div>
+        <div class="slide-item" style="background-image: url('images/panels/p3_3.jpg');"></div>
       </div>
-      <div class="panel-card" data-index="1" title="L'entrée dans la Terre Promise et le Repos">
-        <img src="images/panels/p3_2.jpg" alt="" loading="lazy">
-        <span class="panel-tag">II</span>
+      <div class="slide-progress-track">
+        <div class="slide-progress-bar" id="progress-3"></div>
       </div>
+      <button class="slide-nav-btn prev-btn" onclick="prevSlide(3)">‹</button>
+      <button class="slide-nav-btn next-btn" onclick="nextSlide(3)">›</button>
+      <div class="slide-bullets" id="bullets-3"></div>
     </div>
 
+    <!-- Mosaic Grid -->
+    <div class="mosaic-grid hidden" id="grid-3">
+      <div class="panel-card" data-index="0" title="1. Les espions et la grappe de Canaan"><img src="images/panels/p3_1.jpg" alt="" loading="lazy"><span class="panel-tag">I</span></div>
+      <div class="panel-card" data-index="1" title="2. Moïse et le serpent d'airain"><img src="images/panels/p3_2.jpg" alt="" loading="lazy"><span class="panel-tag">II</span></div>
+      <div class="panel-card" data-index="2" title="3. Moïse et le discours d'adieu"><img src="images/panels/p3_3.jpg" alt="" loading="lazy"><span class="panel-tag">III</span></div>
+    </div>
+
+    <!-- Password Gate -->
+    <div class="floating-gate">
+      <form class="gate-form" id="form-gate-3" onsubmit="return false;">
+        <span class="lock-glyph">🔒</span>
+        <input type="text" id="pass-3" class="gate-input" placeholder="Mot de passe..." autocomplete="off" spellcheck="false">
+        <button type="submit" class="gate-btn" title="Valider">➜</button>
+      </form>
+      <div class="gate-status" id="feedback-3"></div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       PAGE 4 : JOSUÉ & JUGES
+       ========================================================================= -->
+  <section class="story-page" id="page-4" data-page="4">
+
+    <div class="slideshow-view" id="slideshow-4">
+      <div class="slide-viewport">
+        <div class="slide-item active" style="background-image: url('images/panels/p4_1.jpg');"></div>
+        <div class="slide-item" style="background-image: url('images/panels/p4_2.jpg');"></div>
+        <div class="slide-item" style="background-image: url('images/panels/p4_3.jpg');"></div>
+      </div>
+      <div class="slide-progress-track">
+        <div class="slide-progress-bar" id="progress-4"></div>
+      </div>
+      <button class="slide-nav-btn prev-btn" onclick="prevSlide(4)">‹</button>
+      <button class="slide-nav-btn next-btn" onclick="nextSlide(4)">›</button>
+      <div class="slide-bullets" id="bullets-4"></div>
+    </div>
+
+    <div class="mosaic-grid hidden" id="grid-4">
+      <div class="panel-card" data-index="0" title="1. La chute des murs de Jéricho"><img src="images/panels/p4_1.jpg" alt="" loading="lazy"><span class="panel-tag">I</span></div>
+      <div class="panel-card" data-index="1" title="2. Débora la prophétesse"><img src="images/panels/p4_2.jpg" alt="" loading="lazy"><span class="panel-tag">II</span></div>
+      <div class="panel-card" data-index="2" title="3. Samson et Dalila"><img src="images/panels/p4_3.jpg" alt="" loading="lazy"><span class="panel-tag">III</span></div>
+    </div>
+
+    <div class="floating-gate">
+      <form class="gate-form" id="form-gate-4" onsubmit="return false;">
+        <span class="lock-glyph">🔒</span>
+        <input type="text" id="pass-4" class="gate-input" placeholder="Mot de passe..." autocomplete="off" spellcheck="false">
+        <button type="submit" class="gate-btn" title="Valider">➜</button>
+      </form>
+      <div class="gate-status" id="feedback-4"></div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       PAGE 5 : SAMUEL & SAÜL
+       ========================================================================= -->
+  <section class="story-page" id="page-5" data-page="5">
+
+    <div class="slideshow-view" id="slideshow-5">
+      <div class="slide-viewport">
+        <div class="slide-item active" style="background-image: url('images/panels/p5_1.jpg');"></div>
+        <div class="slide-item" style="background-image: url('images/panels/p5_2.jpg');"></div>
+        <div class="slide-item" style="background-image: url('images/panels/p5_3.jpg');"></div>
+      </div>
+      <div class="slide-progress-track">
+        <div class="slide-progress-bar" id="progress-5"></div>
+      </div>
+      <button class="slide-nav-btn prev-btn" onclick="prevSlide(5)">‹</button>
+      <button class="slide-nav-btn next-btn" onclick="nextSlide(5)">›</button>
+      <div class="slide-bullets" id="bullets-5"></div>
+    </div>
+
+    <div class="mosaic-grid hidden" id="grid-5">
+      <div class="panel-card" data-index="0" title="1. Samuel enfant appelé par Dieu"><img src="images/panels/p5_1.jpg" alt="" loading="lazy"><span class="panel-tag">I</span></div>
+      <div class="panel-card" data-index="1" title="2. David et Goliath"><img src="images/panels/p5_2.jpg" alt="" loading="lazy"><span class="panel-tag">II</span></div>
+      <div class="panel-card" data-index="2" title="3. David jouant de la harpe devant Saül"><img src="images/panels/p5_3.jpg" alt="" loading="lazy"><span class="panel-tag">III</span></div>
+    </div>
+
+    <div class="floating-gate">
+      <form class="gate-form" id="form-gate-5" onsubmit="return false;">
+        <span class="lock-glyph">🔒</span>
+        <input type="text" id="pass-5" class="gate-input" placeholder="Mot de passe..." autocomplete="off" spellcheck="false">
+        <button type="submit" class="gate-btn" title="Valider">➜</button>
+      </form>
+      <div class="gate-status" id="feedback-5"></div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       PAGE 6 : LE ROI DAVID
+       ========================================================================= -->
+  <section class="story-page" id="page-6" data-page="6">
+
+    <div class="slideshow-view" id="slideshow-6">
+      <div class="slide-viewport">
+        <div class="slide-item active" style="background-image: url('images/panels/p6_1.jpg');"></div>
+        <div class="slide-item" style="background-image: url('images/panels/p6_2.jpg');"></div>
+        <div class="slide-item" style="background-image: url('images/panels/p6_3.jpg');"></div>
+      </div>
+      <div class="slide-progress-track">
+        <div class="slide-progress-bar" id="progress-6"></div>
+      </div>
+      <button class="slide-nav-btn prev-btn" onclick="prevSlide(6)">‹</button>
+      <button class="slide-nav-btn next-btn" onclick="nextSlide(6)">›</button>
+      <div class="slide-bullets" id="bullets-6"></div>
+    </div>
+
+    <div class="mosaic-grid hidden" id="grid-6">
+      <div class="panel-card" data-index="0" title="1. L'arche de l'alliance à Jérusalem"><img src="images/panels/p6_1.jpg" alt="" loading="lazy"><span class="panel-tag">I</span></div>
+      <div class="panel-card" data-index="1" title="2. Nathan le prophète face à David"><img src="images/panels/p6_2.jpg" alt="" loading="lazy"><span class="panel-tag">II</span></div>
+      <div class="panel-card" data-index="2" title="3. Salomon recevant la sagesse de Dieu"><img src="images/panels/p6_3.jpg" alt="" loading="lazy"><span class="panel-tag">III</span></div>
+    </div>
+
+    <div class="floating-gate">
+      <form class="gate-form" id="form-gate-6" onsubmit="return false;">
+        <span class="lock-glyph">🔒</span>
+        <input type="text" id="pass-6" class="gate-input" placeholder="Mot de passe..." autocomplete="off" spellcheck="false">
+        <button type="submit" class="gate-btn" title="Valider">➜</button>
+      </form>
+      <div class="gate-status" id="feedback-6"></div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       PAGE 7 : ROIS & PROPHÈTES (ÉLIE, ÉLISÉE)
+       ========================================================================= -->
+  <section class="story-page" id="page-7" data-page="7">
+
+    <div class="slideshow-view" id="slideshow-7">
+      <div class="slide-viewport">
+        <div class="slide-item active" style="background-image: url('images/panels/p7_1.jpg');"></div>
+        <div class="slide-item" style="background-image: url('images/panels/p7_2.jpg');"></div>
+        <div class="slide-item" style="background-image: url('images/panels/p7_3.jpg');"></div>
+      </div>
+      <div class="slide-progress-track">
+        <div class="slide-progress-bar" id="progress-7"></div>
+      </div>
+      <button class="slide-nav-btn prev-btn" onclick="prevSlide(7)">‹</button>
+      <button class="slide-nav-btn next-btn" onclick="nextSlide(7)">›</button>
+      <div class="slide-bullets" id="bullets-7"></div>
+    </div>
+
+    <div class="mosaic-grid hidden" id="grid-7">
+      <div class="panel-card" data-index="0" title="1. Élie sur le mont Carmel"><img src="images/panels/p7_1.jpg" alt="" loading="lazy"><span class="panel-tag">I</span></div>
+      <div class="panel-card" data-index="1" title="2. Élie dans le désert / l'ange qui le nourrit"><img src="images/panels/p7_2.jpg" alt="" loading="lazy"><span class="panel-tag">II</span></div>
+      <div class="panel-card" data-index="2" title="3. Le char de feu emportant Élie au ciel"><img src="images/panels/p7_3.jpg" alt="" loading="lazy"><span class="panel-tag">III</span></div>
+    </div>
+
+    <div class="floating-gate">
+      <form class="gate-form" id="form-gate-7" onsubmit="return false;">
+        <span class="lock-glyph">🔒</span>
+        <input type="text" id="pass-7" class="gate-input" placeholder="Mot de passe..." autocomplete="off" spellcheck="false">
+        <button type="submit" class="gate-btn" title="Valider">➜</button>
+      </form>
+      <div class="gate-status" id="feedback-7"></div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       PAGE 8 : ISAÏE & JÉRÉMIE
+       ========================================================================= -->
+  <section class="story-page" id="page-8" data-page="8">
+
+    <div class="slideshow-view" id="slideshow-8">
+      <div class="slide-viewport">
+        <div class="slide-item active" style="background-image: url('images/panels/p8_1.jpg');"></div>
+        <div class="slide-item" style="background-image: url('images/panels/p8_2.jpg');"></div>
+        <div class="slide-item" style="background-image: url('images/panels/p8_3.jpg');"></div>
+      </div>
+      <div class="slide-progress-track">
+        <div class="slide-progress-bar" id="progress-8"></div>
+      </div>
+      <button class="slide-nav-btn prev-btn" onclick="prevSlide(8)">‹</button>
+      <button class="slide-nav-btn next-btn" onclick="nextSlide(8)">›</button>
+      <div class="slide-bullets" id="bullets-8"></div>
+    </div>
+
+    <div class="mosaic-grid hidden" id="grid-8">
+      <div class="panel-card" data-index="0" title="1. Isaïe voyant la vision de Dieu"><img src="images/panels/p8_1.jpg" alt="" loading="lazy"><span class="panel-tag">I</span></div>
+      <div class="panel-card" data-index="1" title="2. Jérémie pleurant la destruction de Jérusalem"><img src="images/panels/p8_2.jpg" alt="" loading="lazy"><span class="panel-tag">II</span></div>
+      <div class="panel-card" data-index="2" title="3. L'exil à Babylone"><img src="images/panels/p8_3.jpg" alt="" loading="lazy"><span class="panel-tag">III</span></div>
+    </div>
+
+    <div class="floating-gate">
+      <form class="gate-form" id="form-gate-8" onsubmit="return false;">
+        <span class="lock-glyph">🔒</span>
+        <input type="text" id="pass-8" class="gate-input" placeholder="Mot de passe..." autocomplete="off" spellcheck="false">
+        <button type="submit" class="gate-btn" title="Valider">➜</button>
+      </form>
+      <div class="gate-status" id="feedback-8"></div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       PAGE 9 : DANIEL & L'EXIL
+       ========================================================================= -->
+  <section class="story-page" id="page-9" data-page="9">
+
+    <div class="slideshow-view" id="slideshow-9">
+      <div class="slide-viewport">
+        <div class="slide-item active" style="background-image: url('images/panels/p9_1.jpg');"></div>
+        <div class="slide-item" style="background-image: url('images/panels/p9_2.jpg');"></div>
+        <div class="slide-item" style="background-image: url('images/panels/p9_3.jpg');"></div>
+      </div>
+      <div class="slide-progress-track">
+        <div class="slide-progress-bar" id="progress-9"></div>
+      </div>
+      <button class="slide-nav-btn prev-btn" onclick="prevSlide(9)">‹</button>
+      <button class="slide-nav-btn next-btn" onclick="nextSlide(9)">›</button>
+      <div class="slide-bullets" id="bullets-9"></div>
+    </div>
+
+    <div class="mosaic-grid hidden" id="grid-9">
+      <div class="panel-card" data-index="0" title="1. Daniel dans la fosse aux lions"><img src="images/panels/p9_1.jpg" alt="" loading="lazy"><span class="panel-tag">I</span></div>
+      <div class="panel-card" data-index="1" title="2. Les trois hébreux dans la fournaise ardente"><img src="images/panels/p9_2.jpg" alt="" loading="lazy"><span class="panel-tag">II</span></div>
+      <div class="panel-card" data-index="2" title="3. L'écriture sur le mur / festin de Balthasar"><img src="images/panels/p9_3.jpg" alt="" loading="lazy"><span class="panel-tag">III</span></div>
+    </div>
+
+    <div class="floating-gate">
+      <form class="gate-form" id="form-gate-9" onsubmit="return false;">
+        <span class="lock-glyph">🔒</span>
+        <input type="text" id="pass-9" class="gate-input" placeholder="Mot de passe..." autocomplete="off" spellcheck="false">
+        <button type="submit" class="gate-btn" title="Valider">➜</button>
+      </form>
+      <div class="gate-status" id="feedback-9"></div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       PAGE 10 : ESDRAS, NÉHÉMIE & ESTHER
+       ========================================================================= -->
+  <section class="story-page" id="page-10" data-page="10">
+
+    <div class="slideshow-view" id="slideshow-10">
+      <div class="slide-viewport">
+        <div class="slide-item active" style="background-image: url('images/panels/p10_1.jpg');"></div>
+        <div class="slide-item" style="background-image: url('images/panels/p10_2.jpg');"></div>
+        <div class="slide-item" style="background-image: url('images/panels/p10_3.jpg');"></div>
+      </div>
+      <div class="slide-progress-track">
+        <div class="slide-progress-bar" id="progress-10"></div>
+      </div>
+      <button class="slide-nav-btn prev-btn" onclick="prevSlide(10)">‹</button>
+      <button class="slide-nav-btn next-btn" onclick="nextSlide(10)">›</button>
+      <div class="slide-bullets" id="bullets-10"></div>
+    </div>
+
+    <div class="mosaic-grid hidden" id="grid-10">
+      <div class="panel-card" data-index="0" title="1. Esther devant le roi Assuérus"><img src="images/panels/p10_1.jpg" alt="" loading="lazy"><span class="panel-tag">I</span></div>
+      <div class="panel-card" data-index="1" title="2. Néhémie reconstruisant les murs de Jérusalem"><img src="images/panels/p10_2.jpg" alt="" loading="lazy"><span class="panel-tag">II</span></div>
+      <div class="panel-card" data-index="2" title="3. Esdras lisant la Loi au peuple"><img src="images/panels/p10_3.jpg" alt="" loading="lazy"><span class="panel-tag">III</span></div>
+    </div>
+
+    <!-- Page 10 : pas de mot de passe, bouton Recommencer -->
     <div class="floating-gate">
       <button class="replay-btn" onclick="goToPage(1)">
         <span>⟲ Recommencer</span>
