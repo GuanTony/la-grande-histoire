@@ -22,11 +22,11 @@ const state = {
     9: 'Esprit',
     10: 'Messager',
     11: 'Nations',
-    12: 'Tâche',
-    13: 'Loi',
+    12: 'culte',
+    13: 'servir',
     14: 'Amour',
-    15: 'Terme',
-    16: 'Repentance'
+    15: 'Oeuvre',
+    16: 'Patience'
   }
 };
 
