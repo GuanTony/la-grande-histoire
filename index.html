@@ -11,30 +11,27 @@
 </head>
 <body>
 
-  <!-- Ambient Animated Canvas Layer -->
-  <canvas id="ambient-canvas"></canvas>
-
-  <!-- Top Controls Bar -->
+  <!-- Top Navigation Controls -->
   <header class="top-nav">
     <div class="nav-left">
-      <!-- Mode Switch: 9-Panel Fresco Grid vs Fullscreen Cinematic Film -->
-      <div class="view-toggle" title="Basculer entre Fresque 3x3 et Diaporama">
-        <button id="mode-grid-btn" class="toggle-btn active">
-          <span>▦</span> Grille 9
-        </button>
-        <button id="mode-slide-btn" class="toggle-btn">
+      <!-- Mode Switch: Slideshow (Default) vs 9-Panel Grid -->
+      <div class="view-toggle">
+        <button id="mode-slide-btn" class="toggle-btn active" title="Mode Diaporama (Défilement 15s)">
           <span>▶</span> Diaporama
+        </button>
+        <button id="mode-grid-btn" class="toggle-btn" title="Mode Grille 9 panneaux">
+          <span>▦</span> Grille 9
         </button>
       </div>
     </div>
 
-    <!-- Chapter Dots Indicator -->
+    <!-- Chapter Indicator -->
     <nav class="chapter-dots">
       <button class="dot-btn active" data-page="1" title="Chapitre I : Genèse">
         <span class="dot-num">I</span>
       </button>
       <span class="dot-line"></span>
-      <button class="dot-btn locked" data-page="2" title="Chapitre II : Exode (Verrouillé)" disabled>
+      <button class="dot-btn locked" data-page="2" title="Chapitre II : Exode & Lévitique (Verrouillé)" disabled>
         <span class="dot-num">II</span>
       </button>
       <span class="dot-line"></span>
@@ -42,34 +39,62 @@
         <span class="dot-num">III</span>
       </button>
     </nav>
-
-    <div class="nav-right">
-      <button id="sound-btn" class="icon-toggle" title="Son Activer / Couper">
-        <span id="sound-icon">🔊</span>
-      </button>
-    </div>
   </header>
 
   <!-- =========================================================================
-       PAGE 1 : GENÈSE (HISTOIRE DÉCOUPÉE EN 9 DESSINS)
+       PAGE 1 : GENÈSE (9 SCÈNES CONCRÈTES & DIAPORAMA 15S)
        ========================================================================= -->
   <section class="story-page active" id="page-1" data-page="1">
     
-    <!-- 3x3 Mosaic Grid (9 Scènes de la Genèse) -->
-    <div class="mosaic-grid" id="grid-1">
-      <div class="panel-card" data-index="0" title="1. La Création du Monde">
+    <!-- Slideshow View (Défaut : Défilement automatique 15s) -->
+    <div class="slideshow-view" id="slideshow-1">
+      <div class="slide-viewport">
+        <!-- 1. Création -->
+        <div class="slide-item active" style="background-image: url('images/panels/p1_1.jpg');"></div>
+        <!-- 2. Adam et Ève / fruit défendu -->
+        <div class="slide-item" style="background-image: url('images/panels/p1_2.jpg');"></div>
+        <!-- 3. Caïn et Abel -->
+        <div class="slide-item" style="background-image: url('images/panels/p1_3.jpg');"></div>
+        <!-- 4. L'Arche de Noé -->
+        <div class="slide-item" style="background-image: url('images/panels/p1_4.jpg');"></div>
+        <!-- 5. La Tour de Babel -->
+        <div class="slide-item" style="background-image: url('images/panels/p1_5.jpg');"></div>
+        <!-- 6. Abraham appelé / bénédiction -->
+        <div class="slide-item" style="background-image: url('images/panels/p1_6.jpg');"></div>
+        <!-- 7. Jacob (Israël) -->
+        <div class="slide-item" style="background-image: url('images/panels/p1_7.jpg');"></div>
+        <!-- 8. Joseph vendu en Égypte -->
+        <div class="slide-item" style="background-image: url('images/panels/p1_8.jpg');"></div>
+        <!-- 9. Joseph réconcilié sauvant son peuple -->
+        <div class="slide-item" style="background-image: url('images/panels/p1_9.jpg');"></div>
+      </div>
+
+      <!-- 15s Progress Bar -->
+      <div class="slide-progress-track">
+        <div class="slide-progress-bar" id="progress-1"></div>
+      </div>
+
+      <!-- Controls & Bullets -->
+      <button class="slide-nav-btn prev-btn" onclick="prevSlide(1)">‹</button>
+      <button class="slide-nav-btn next-btn" onclick="nextSlide(1)">›</button>
+      <div class="slide-bullets" id="bullets-1"></div>
+    </div>
+
+    <!-- 3x3 Mosaic Grid (Optionnelle) -->
+    <div class="mosaic-grid hidden" id="grid-1">
+      <div class="panel-card" data-index="0" title="1. La Création">
         <img src="images/panels/p1_1.jpg" alt="" loading="lazy">
         <span class="panel-tag">I</span>
       </div>
-      <div class="panel-card" data-index="1" title="2. Adam et Ève chassés de l'Éden">
+      <div class="panel-card" data-index="1" title="2. Adam & Ève">
         <img src="images/panels/p1_2.jpg" alt="" loading="lazy">
         <span class="panel-tag">II</span>
       </div>
-      <div class="panel-card" data-index="2" title="3. Caïn et Abel">
+      <div class="panel-card" data-index="2" title="3. Caïn & Abel">
         <img src="images/panels/p1_3.jpg" alt="" loading="lazy">
         <span class="panel-tag">III</span>
       </div>
-      <div class="panel-card" data-index="3" title="4. Le Déluge et l'Arche de Noé">
+      <div class="panel-card" data-index="3" title="4. L'Arche de Noé">
         <img src="images/panels/p1_4.jpg" alt="" loading="lazy">
         <span class="panel-tag">IV</span>
       </div>
@@ -77,44 +102,25 @@
         <img src="images/panels/p1_5.jpg" alt="" loading="lazy">
         <span class="panel-tag">V</span>
       </div>
-      <div class="panel-card" data-index="5" title="6. Abraham et l'épreuve de la foi">
+      <div class="panel-card" data-index="5" title="6. Abraham">
         <img src="images/panels/p1_6.jpg" alt="" loading="lazy">
         <span class="panel-tag">VI</span>
       </div>
-      <div class="panel-card" data-index="6" title="7. Le combat de Jacob (Israël)">
+      <div class="panel-card" data-index="6" title="7. Jacob (Israël)">
         <img src="images/panels/p1_7.jpg" alt="" loading="lazy">
         <span class="panel-tag">VII</span>
       </div>
-      <div class="panel-card" data-index="7" title="8. Joseph vendu par ses frères">
+      <div class="panel-card" data-index="7" title="8. Joseph vendu">
         <img src="images/panels/p1_8.jpg" alt="" loading="lazy">
         <span class="panel-tag">VIII</span>
       </div>
-      <div class="panel-card" data-index="8" title="9. Joseph sauve sa famille en Égypte">
+      <div class="panel-card" data-index="8" title="9. Joseph sauve son peuple">
         <img src="images/panels/p1_9.jpg" alt="" loading="lazy">
         <span class="panel-tag">IX</span>
       </div>
     </div>
 
-    <!-- Cinematic Slide View (Enchaînement d'images) -->
-    <div class="slideshow-view hidden" id="slideshow-1">
-      <div class="slide-viewport">
-        <div class="slide-item active" style="background-image: url('images/panels/p1_1.jpg');"></div>
-        <div class="slide-item" style="background-image: url('images/panels/p1_2.jpg');"></div>
-        <div class="slide-item" style="background-image: url('images/panels/p1_3.jpg');"></div>
-        <div class="slide-item" style="background-image: url('images/panels/p1_4.jpg');"></div>
-        <div class="slide-item" style="background-image: url('images/panels/p1_5.jpg');"></div>
-        <div class="slide-item" style="background-image: url('images/panels/p1_6.jpg');"></div>
-        <div class="slide-item" style="background-image: url('images/panels/p1_7.jpg');"></div>
-        <div class="slide-item" style="background-image: url('images/panels/p1_8.jpg');"></div>
-        <div class="slide-item" style="background-image: url('images/panels/p1_9.jpg');"></div>
-      </div>
-      <!-- Slide navigation controls -->
-      <button class="slide-nav-btn prev-btn" onclick="prevSlide(1)">‹</button>
-      <button class="slide-nav-btn next-btn" onclick="nextSlide(1)">›</button>
-      <div class="slide-bullets" id="bullets-1"></div>
-    </div>
-
-    <!-- Secret Password Gate -->
+    <!-- Password Gate (peuple) -->
     <div class="floating-gate">
       <form class="gate-form" id="form-gate-1" onsubmit="return false;">
         <span class="lock-glyph">🔒</span>
@@ -133,69 +139,85 @@
   </section>
 
   <!-- =========================================================================
-       PAGE 2 : EXODE & LÉVITIQUE (HISTOIRE DÉCOUPÉE EN 9 DESSINS)
+       PAGE 2 : EXODE & LÉVITIQUE (9 SCÈNES CONCRÈTES & DIAPORAMA 15S)
        ========================================================================= -->
   <section class="story-page" id="page-2" data-page="2">
     
-    <!-- 3x3 Mosaic Grid (9 Scènes d'Exode & Lévitique) -->
-    <div class="mosaic-grid" id="grid-2">
-      <div class="panel-card" data-index="0" title="1. Moïse sur le Nil sous l'esclavage">
-        <img src="images/panels/p2_1.jpg" alt="" loading="lazy">
-        <span class="panel-tag">I</span>
-      </div>
-      <div class="panel-card" data-index="1" title="2. Moïse sauvé par la fille de Pharaon">
-        <img src="images/panels/p2_2.jpg" alt="" loading="lazy">
-        <span class="panel-tag">II</span>
-      </div>
-      <div class="panel-card" data-index="2" title="3. Moïse et Aaron devant Pharaon">
-        <img src="images/panels/p2_3.jpg" alt="" loading="lazy">
-        <span class="panel-tag">III</span>
-      </div>
-      <div class="panel-card" data-index="3" title="4. Les Plaies d'Égypte (Les Ténèbres)">
-        <img src="images/panels/p2_4.jpg" alt="" loading="lazy">
-        <span class="panel-tag">IV</span>
-      </div>
-      <div class="panel-card" data-index="4" title="5. La mort des premiers-nés & La Pâque">
-        <img src="images/panels/p2_5.jpg" alt="" loading="lazy">
-        <span class="panel-tag">V</span>
-      </div>
-      <div class="panel-card" data-index="5" title="6. Le passage de la Mer Rouge">
-        <img src="images/panels/p2_6.jpg" alt="" loading="lazy">
-        <span class="panel-tag">VI</span>
-      </div>
-      <div class="panel-card" data-index="6" title="7. Le don de la Loi au Sinaï">
-        <img src="images/panels/p2_7.jpg" alt="" loading="lazy">
-        <span class="panel-tag">VII</span>
-      </div>
-      <div class="panel-card" data-index="7" title="8. Le Veau d'Or et la rupture">
-        <img src="images/panels/p2_8.jpg" alt="" loading="lazy">
-        <span class="panel-tag">VIII</span>
-      </div>
-      <div class="panel-card" data-index="8" title="9. Moïse rayonnant & La Sainte Présence">
-        <img src="images/panels/p2_9.jpg" alt="" loading="lazy">
-        <span class="panel-tag">IX</span>
-      </div>
-    </div>
-
-    <!-- Cinematic Slide View -->
-    <div class="slideshow-view hidden" id="slideshow-2">
+    <!-- Slideshow View (Défaut : Défilement automatique 15s) -->
+    <div class="slideshow-view" id="slideshow-2">
       <div class="slide-viewport">
+        <!-- 1. Moïse sur le Nil -->
         <div class="slide-item active" style="background-image: url('images/panels/p2_1.jpg');"></div>
+        <!-- 2. Buisson ardent -->
         <div class="slide-item" style="background-image: url('images/panels/p2_2.jpg');"></div>
+        <!-- 3. Devant Pharaon -->
         <div class="slide-item" style="background-image: url('images/panels/p2_3.jpg');"></div>
+        <!-- 4. Les Plaies d'Égypte -->
         <div class="slide-item" style="background-image: url('images/panels/p2_4.jpg');"></div>
+        <!-- 5. La Pâque (sang de l'agneau) -->
         <div class="slide-item" style="background-image: url('images/panels/p2_5.jpg');"></div>
+        <!-- 6. Traversée de la Mer Rouge -->
         <div class="slide-item" style="background-image: url('images/panels/p2_6.jpg');"></div>
+        <!-- 7. Les 10 Commandements au Sinaï -->
         <div class="slide-item" style="background-image: url('images/panels/p2_7.jpg');"></div>
+        <!-- 8. Le Veau d'Or -->
         <div class="slide-item" style="background-image: url('images/panels/p2_8.jpg');"></div>
+        <!-- 9. Le Tabernacle & Le Grand Pardon -->
         <div class="slide-item" style="background-image: url('images/panels/p2_9.jpg');"></div>
       </div>
+
+      <!-- 15s Progress Bar -->
+      <div class="slide-progress-track">
+        <div class="slide-progress-bar" id="progress-2"></div>
+      </div>
+
+      <!-- Controls & Bullets -->
       <button class="slide-nav-btn prev-btn" onclick="prevSlide(2)">‹</button>
       <button class="slide-nav-btn next-btn" onclick="nextSlide(2)">›</button>
       <div class="slide-bullets" id="bullets-2"></div>
     </div>
 
-    <!-- Secret Password Gate -->
+    <!-- 3x3 Mosaic Grid (Optionnelle) -->
+    <div class="mosaic-grid hidden" id="grid-2">
+      <div class="panel-card" data-index="0" title="1. Moïse sur le Nil">
+        <img src="images/panels/p2_1.jpg" alt="" loading="lazy">
+        <span class="panel-tag">I</span>
+      </div>
+      <div class="panel-card" data-index="1" title="2. Le Buisson Ardent">
+        <img src="images/panels/p2_2.jpg" alt="" loading="lazy">
+        <span class="panel-tag">II</span>
+      </div>
+      <div class="panel-card" data-index="2" title="3. Devant Pharaon">
+        <img src="images/panels/p2_3.jpg" alt="" loading="lazy">
+        <span class="panel-tag">III</span>
+      </div>
+      <div class="panel-card" data-index="3" title="4. Les Plaies d'Égypte">
+        <img src="images/panels/p2_4.jpg" alt="" loading="lazy">
+        <span class="panel-tag">IV</span>
+      </div>
+      <div class="panel-card" data-index="4" title="5. La Pâque">
+        <img src="images/panels/p2_5.jpg" alt="" loading="lazy">
+        <span class="panel-tag">V</span>
+      </div>
+      <div class="panel-card" data-index="5" title="6. La Mer Rouge">
+        <img src="images/panels/p2_6.jpg" alt="" loading="lazy">
+        <span class="panel-tag">VI</span>
+      </div>
+      <div class="panel-card" data-index="6" title="7. Les 10 Commandements">
+        <img src="images/panels/p2_7.jpg" alt="" loading="lazy">
+        <span class="panel-tag">VII</span>
+      </div>
+      <div class="panel-card" data-index="7" title="8. Le Veau d'Or">
+        <img src="images/panels/p2_8.jpg" alt="" loading="lazy">
+        <span class="panel-tag">VIII</span>
+      </div>
+      <div class="panel-card" data-index="8" title="9. Le Tabernacle">
+        <img src="images/panels/p2_9.jpg" alt="" loading="lazy">
+        <span class="panel-tag">IX</span>
+      </div>
+    </div>
+
+    <!-- Password Gate (repos) -->
     <div class="floating-gate">
       <form class="gate-form" id="form-gate-2" onsubmit="return false;">
         <span class="lock-glyph">🔒</span>
@@ -217,13 +239,12 @@
        PAGE 3 : LA TERRE PROMISE / LE REPOS
        ========================================================================= -->
   <section class="story-page" id="page-3" data-page="3">
-    
     <div class="mosaic-grid mosaic-duo" id="grid-3">
-      <div class="panel-card" data-index="0" title="Les explorateurs rapportent les fruits de Canaan">
+      <div class="panel-card" data-index="0" title="Les explorateurs dans la Terre Promise">
         <img src="images/panels/p3_1.jpg" alt="" loading="lazy">
         <span class="panel-tag">I</span>
       </div>
-      <div class="panel-card" data-index="1" title="La traversée du Jourdain vers le Repos">
+      <div class="panel-card" data-index="1" title="L'entrée dans la Terre Promise et le Repos">
         <img src="images/panels/p3_2.jpg" alt="" loading="lazy">
         <span class="panel-tag">II</span>
       </div>

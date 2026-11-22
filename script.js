@@ -1,22 +1,21 @@
 /* ==========================================================================
-   LA GRANDE HISTOIRE - FRESCO 9 & SLIDESHOW MECHANICS
+   LA GRANDE HISTOIRE - 15-SECOND AUTOMATIC SLIDESHOW & PROGRESSION
    ========================================================================== */
 
 const state = {
   currentPage: 1,
   unlockedPages: [1],
-  currentMode: 'grid', // 'grid' or 'slideshow'
+  currentMode: 'slideshow', // Default directly to slideshow
   currentSlide: { 1: 0, 2: 0 },
-  soundEnabled: true,
   passwords: {
     1: 'peuple',
     2: 'repos'
   }
 };
 
-// Restore progress
+// Restore saved progress
 try {
-  const saved = localStorage.getItem('lgh_fresco_unlocked');
+  const saved = localStorage.getItem('lgh_concrete_unlocked');
   if (saved) {
     const parsed = JSON.parse(saved);
     if (Array.isArray(parsed)) {
@@ -26,151 +25,37 @@ try {
 } catch (e) {}
 
 // --------------------------------------------------------------------------
-// Audio Synthesizer (Chime & Error)
+// 15-Second Automatic Slideshow Timer & Progress Bar
 // --------------------------------------------------------------------------
-let audioCtx = null;
+const SLIDE_DURATION = 15000; // 15 seconds
+let slideStartTime = Date.now();
+let slideTimerAnim = null;
 
-function initAudio() {
-  if (!audioCtx) {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (AudioContext) audioCtx = new AudioContext();
-  }
-  if (audioCtx && audioCtx.state === 'suspended') {
-    audioCtx.resume();
-  }
+function resetSlideTimer() {
+  slideStartTime = Date.now();
 }
 
-function playUnlockSound() {
-  if (!state.soundEnabled) return;
-  try {
-    initAudio();
-    if (!audioCtx) return;
+function updateProgressBar() {
+  const elapsed = Date.now() - slideStartTime;
+  const progress = Math.min(100, (elapsed / SLIDE_DURATION) * 100);
 
-    const freqs = [349.23, 440.00, 523.25, 659.25, 783.99]; // F maj 9
-    const now = audioCtx.currentTime;
+  const bar = document.getElementById(`progress-${state.currentPage}`);
+  if (bar) {
+    bar.style.width = `${progress}%`;
+  }
 
-    freqs.forEach((freq, idx) => {
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
+  if (elapsed >= SLIDE_DURATION) {
+    if (state.currentMode === 'slideshow' && state.currentPage <= 2) {
+      nextSlide(state.currentPage, false); // auto next
+    }
+    resetSlideTimer();
+  }
 
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, now + idx * 0.07);
-
-      gain.gain.setValueAtTime(0.001, now + idx * 0.07);
-      gain.gain.exponentialRampToValueAtTime(0.12, now + idx * 0.07 + 0.04);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.07 + 1.8);
-
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-
-      osc.start(now + idx * 0.07);
-      osc.stop(now + idx * 0.07 + 1.9);
-    });
-  } catch (err) {}
-}
-
-function playErrorSound() {
-  if (!state.soundEnabled) return;
-  try {
-    initAudio();
-    if (!audioCtx) return;
-
-    const now = audioCtx.currentTime;
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-
-    osc.type = 'triangle';
-    osc.frequency.setValueAtTime(140, now);
-    osc.frequency.exponentialRampToValueAtTime(65, now + 0.22);
-
-    gain.gain.setValueAtTime(0.12, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
-
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-
-    osc.start(now);
-    osc.stop(now + 0.23);
-  } catch (err) {}
+  slideTimerAnim = requestAnimationFrame(updateProgressBar);
 }
 
 // --------------------------------------------------------------------------
-// Ambient Canvas Background
-// --------------------------------------------------------------------------
-const canvas = document.getElementById('ambient-canvas');
-const ctx = canvas.getContext('2d');
-let width, height;
-let particles = [];
-
-function resizeCanvas() {
-  width = canvas.width = window.innerWidth;
-  height = canvas.height = window.innerHeight;
-}
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
-
-function initParticles() {
-  particles = [];
-  for (let i = 0; i < 60; i++) {
-    particles.push({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      size: Math.random() * 2.2 + 0.8,
-      vx: (Math.random() - 0.5) * 0.4,
-      vy: (Math.random() - 0.5) * 0.4,
-      alpha: Math.random() * 0.6 + 0.2,
-      pulse: Math.random() * Math.PI * 2,
-      color: state.currentPage === 2 ? '255, 150, 50' : '245, 215, 130'
-    });
-  }
-}
-initParticles();
-
-function animateCanvas() {
-  ctx.clearRect(0, 0, width, height);
-
-  // Soft atmospheric radial gradient
-  const grad = ctx.createRadialGradient(width * 0.5, height * 0.5, 30, width * 0.5, height * 0.5, width * 0.7);
-  if (state.currentPage === 1) {
-    grad.addColorStop(0, 'rgba(212, 175, 55, 0.08)');
-    grad.addColorStop(1, 'rgba(0, 0, 0, 0.95)');
-  } else if (state.currentPage === 2) {
-    grad.addColorStop(0, 'rgba(200, 70, 20, 0.1)');
-    grad.addColorStop(1, 'rgba(0, 0, 0, 0.95)');
-  } else {
-    grad.addColorStop(0, 'rgba(120, 190, 140, 0.08)');
-    grad.addColorStop(1, 'rgba(0, 0, 0, 0.95)');
-  }
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, 0, width, height);
-
-  // Particles
-  particles.forEach(p => {
-    p.x += p.vx;
-    p.y += p.vy;
-    p.pulse += 0.02;
-    const currentAlpha = Math.max(0.1, p.alpha + Math.sin(p.pulse) * 0.2);
-
-    if (p.x < 0) p.x = width;
-    if (p.x > width) p.x = 0;
-    if (p.y < 0) p.y = height;
-    if (p.y > height) p.y = 0;
-
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(${p.color}, ${currentAlpha})`;
-    ctx.shadowBlur = 10;
-    ctx.shadowColor = `rgba(${p.color}, 0.8)`;
-    ctx.fill();
-    ctx.shadowBlur = 0;
-  });
-
-  requestAnimationFrame(animateCanvas);
-}
-animateCanvas();
-
-// --------------------------------------------------------------------------
-// View Mode Switcher (Grid 9 vs Slideshow)
+// View Mode Switcher (Slideshow vs Grid 9)
 // --------------------------------------------------------------------------
 const modeGridBtn = document.getElementById('mode-grid-btn');
 const modeSlideBtn = document.getElementById('mode-slide-btn');
@@ -187,6 +72,7 @@ function setViewMode(mode) {
     modeGridBtn.classList.remove('active');
     document.querySelectorAll('.mosaic-grid').forEach(el => el.classList.add('hidden'));
     document.querySelectorAll('.slideshow-view').forEach(el => el.classList.remove('hidden'));
+    resetSlideTimer();
     updateSlideDisplay(state.currentPage);
   }
 }
@@ -196,7 +82,7 @@ if (modeGridBtn && modeSlideBtn) {
   modeSlideBtn.addEventListener('click', () => setViewMode('slideshow'));
 }
 
-// Clicking any panel in the 9-grid zooms directly into the slideshow view on that scene!
+// Clicking any card in the 9-grid zooms directly into the slideshow
 document.querySelectorAll('.panel-card').forEach(card => {
   card.addEventListener('click', () => {
     const index = parseInt(card.getAttribute('data-index'), 10) || 0;
@@ -206,7 +92,7 @@ document.querySelectorAll('.panel-card').forEach(card => {
 });
 
 // --------------------------------------------------------------------------
-// Slideshow Mechanics (9 Images enchaînées)
+// Slideshow Navigation (Next, Prev, Bullets)
 // --------------------------------------------------------------------------
 function setupBullets(pageNum) {
   const container = document.getElementById(`bullets-${pageNum}`);
@@ -217,6 +103,7 @@ function setupBullets(pageNum) {
     dot.className = `bullet-dot ${i === state.currentSlide[pageNum] ? 'active' : ''}`;
     dot.addEventListener('click', () => {
       state.currentSlide[pageNum] = i;
+      resetSlideTimer();
       updateSlideDisplay(pageNum);
     });
     container.appendChild(dot);
@@ -251,11 +138,13 @@ function updateSlideDisplay(pageNum) {
 
 function prevSlide(pageNum) {
   state.currentSlide[pageNum] = (state.currentSlide[pageNum] - 1 + 9) % 9;
+  resetSlideTimer();
   updateSlideDisplay(pageNum);
 }
 
-function nextSlide(pageNum) {
+function nextSlide(pageNum, reset = true) {
   state.currentSlide[pageNum] = (state.currentSlide[pageNum] + 1) % 9;
+  if (reset) resetSlideTimer();
   updateSlideDisplay(pageNum);
 }
 
@@ -271,7 +160,7 @@ window.addEventListener('keydown', (e) => {
 });
 
 // --------------------------------------------------------------------------
-// Navigation & Password Gate Logic
+// Page Navigation & Password Gate
 // --------------------------------------------------------------------------
 function updateUI() {
   for (let p = 1; p <= 3; p++) {
@@ -304,7 +193,7 @@ function updateUI() {
     }
   }
 
-  initParticles();
+  resetSlideTimer();
   if (state.currentMode === 'slideshow') {
     updateSlideDisplay(state.currentPage);
   }
@@ -363,7 +252,7 @@ function handleGateSubmit(fromPage) {
     if (!state.unlockedPages.includes(nextPage)) {
       state.unlockedPages.push(nextPage);
       try {
-        localStorage.setItem('lgh_fresco_unlocked', JSON.stringify(state.unlockedPages));
+        localStorage.setItem('lgh_concrete_unlocked', JSON.stringify(state.unlockedPages));
       } catch (e) {}
     }
 
@@ -371,8 +260,6 @@ function handleGateSubmit(fromPage) {
       feedbackEl.textContent = '✨';
       feedbackEl.className = 'gate-status success';
     }
-
-    playUnlockSound();
 
     flashTransition(() => {
       goToPage(nextPage);
@@ -384,7 +271,6 @@ function handleGateSubmit(fromPage) {
       feedbackEl.textContent = 'Le sceau résiste...';
       feedbackEl.className = 'gate-status error';
     }
-    playErrorSound();
 
     inputEl.classList.remove('shake');
     void inputEl.offsetWidth;
@@ -409,16 +295,6 @@ if (form2) {
   });
 }
 
-// Sound toggle
-const soundBtn = document.getElementById('sound-btn');
-const soundIcon = document.getElementById('sound-icon');
-if (soundBtn && soundIcon) {
-  soundBtn.addEventListener('click', () => {
-    initAudio();
-    state.soundEnabled = !state.soundEnabled;
-    soundIcon.textContent = state.soundEnabled ? '🔊' : '🔇';
-  });
-}
-
-// First sync
+// Start timer loop & initial UI
 updateUI();
+requestAnimationFrame(updateProgressBar);
