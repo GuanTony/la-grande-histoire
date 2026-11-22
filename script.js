@@ -112,7 +112,12 @@ document.querySelectorAll('.panel-card').forEach(card => {
 // Slideshow Navigation (Next, Prev, Bullets)
 // --------------------------------------------------------------------------
 function getSlidesCount(pageNum) {
-  return pageNum <= 2 ? 9 : 3;
+  const counts = {
+    1: 6, 2: 6, 3: 3, 4: 4, 5: 4, 6: 4, 7: 4,
+    8: 3, 9: 3, 10: 3, 11: 6,
+    12: 3, 13: 3, 14: 3, 15: 3, 16: 3, 17: 4
+  };
+  return counts[pageNum] || 3;
 }
 
 function setupBullets(pageNum) {
