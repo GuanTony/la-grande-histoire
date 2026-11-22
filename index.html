@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Grande Histoire de la Bible</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Background Animated Canvas -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Ambient Light Overlays -->
+  <div class="ambient-glow glow-top"></div>
+  <div class="ambient-glow glow-bottom"></div>
+
+  <!-- Header & Progress Tracker -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="cross-icon">✦</span>
+        <span class="logo-title">LA GRANDE HISTOIRE</span>
+      </div>
+
+      <nav class="chapter-stepper">
+        <button class="step-btn active" data-page="1" id="btn-nav-1">
+          <span class="step-num">I</span>
+          <span class="step-label">Genèse</span>
+        </button>
+        <span class="step-divider"></span>
+        <button class="step-btn locked" data-page="2" id="btn-nav-2" disabled>
+          <span class="step-num">II</span>
+          <span class="step-label">Exode & Lévitique</span>
+          <span class="lock-icon" id="lock-icon-2">🔒</span>
+        </button>
+        <span class="step-divider"></span>
+        <button class="step-btn locked" data-page="3" id="btn-nav-3" disabled>
+          <span class="step-num">III</span>
+          <span class="step-label">Terre Promise</span>
+          <span class="lock-icon" id="lock-icon-3">🔒</span>
+        </button>
+      </nav>
+
+      <div class="audio-toggle-container">
+        <button id="sound-btn" class="icon-button" title="Activer / Désactiver les effets sonores">
+          <span id="sound-icon">🔊</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Slider -->
+  <main class="story-container">
+
+    <!-- PAGE 1: GENÈSE -->
+    <article class="page-card active" id="page-1" data-theme="genesis">
+      <div class="page-meta">
+        <span class="chapter-badge">LIVRE PREMIER</span>
+        <h1 class="page-title">Genèse</h1>
+        <p class="page-subtitle">Des origines du monde à l'alliance patriarcale</p>
+      </div>
+
+      <div class="page-body">
+        <p class="story-paragraph drop-cap">
+          L'histoire de la Bible s'ouvre dans la Genèse par la création ordonnée de l'univers en six jours : Dieu sépare les ténèbres de la lumière, façonne la terre et place Adam et Ève dans le jardin d'Éden avec pour mission de cultiver ce monde harmonieux en partenariat avec lui. Cependant, tentés par le serpent, ils choisissent de définir le bien et le mal par eux-mêmes en mangeant du fruit défendu, brisant ainsi la relation avec Dieu et introduisant la mort. La violence se propage rapidement dès la génération suivante avec le meurtre d'Abel par son frère Caïn, jusqu'à corrompre toute l'humanité. Dieu décide alors de purifier la terre par le Déluge, ne sauvant que Noé, sa famille et un couple de chaque espèce animale dans une arche. Après les eaux, l'humanité retombe dans l'orgueil en construisant la tour de Babel pour se faire un nom sans Dieu, ce qui entraîne la confusion des langues et la dispersion des peuples.
+        </p>
+
+        <p class="story-paragraph">
+          Face à cet échec global, Dieu change d'approche et appelle un homme nommé Abraham à quitter sa terre pour fonder une nouvelle nation qui deviendra une source de bénédiction pour toutes les familles de la terre. Malgré la stérilité de son épouse Sara, Dieu tient sa promesse en leur donnant un fils, Isaac, tout en éprouvant la foi d'Abraham par le sacrifice arrêté au dernier moment. L'alliance se transmet ensuite à Jacob renommé Israël après un combat mystérieux avec Dieu, dont les douze fils donneront naissance aux douze tribus d'Israël. Jaloux de leur frère cadet Joseph, le préféré de leur père, ses frères le vendent comme esclave à des marchands en route pour l'Égypte. Emprisonné injustement mais doté par Dieu du don d'interpréter les rêves, Joseph est propulsé au rang de premier ministre d'Égypte après avoir prédit sept années d'abondance suivies de sept années de famine ; cette position lui permet de sauver sa propre famille et d'installer les Hébreux en Égypte.
+        </p>
+
+        <!-- Verset Clé -->
+        <blockquote class="verse-card">
+          <div class="verse-symbol">«</div>
+          <p class="verse-text">
+            Vous aviez médité de me faire du mal : Dieu l'a changé en bien, pour accomplir ce qui arrive aujourd'hui, pour sauver la vie à un <strong>peuple</strong> nombreux.
+          </p>
+          <cite class="verse-ref">Genèse 50:20</cite>
+        </blockquote>
+
+        <!-- Enigme / Password Box -->
+        <div class="gate-container" id="gate-1">
+          <div class="gate-inner">
+            <div class="gate-header">
+              <span class="gate-badge">CLÉ DU LIVRE SUIVANT</span>
+              <p class="gate-instruction">
+                Saisissez le mot du verset qui résume le dessein divin pour ouvrir la <strong>Page 2</strong> :
+              </p>
+            </div>
+            <form class="gate-form" id="form-gate-1" onsubmit="return false;">
+              <div class="input-wrapper">
+                <input 
+                  type="text" 
+                  id="pass-1" 
+                  class="gate-input" 
+                  placeholder="Mot de passe du verset..." 
+                  autocomplete="off" 
+                  spellcheck="false"
+                >
+                <button type="submit" class="gate-submit-btn">
+                  <span>Déverrouiller</span>
+                  <span class="arrow-icon">→</span>
+                </button>
+              </div>
+              <p class="gate-feedback" id="feedback-1"></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- PAGE 2: EXODE & LÉVITIQUE -->
+    <article class="page-card" id="page-2" data-theme="exodus">
+      <div class="page-meta">
+        <span class="chapter-badge">LIVRE SECOND</span>
+        <h1 class="page-title">Exode & Lévitique</h1>
+        <p class="page-subtitle">De l'esclavage à la libération, de la Loi à la Présence</p>
+      </div>
+
+      <div class="page-body">
+        <p class="story-paragraph drop-cap">
+          Quatre siècles après l'installation de Joseph, les descendants d'Israël sont devenus si nombreux en Égypte qu'un nouveau Pharaon, craignant une révolte, les réduit à un dur esclavage et ordonne de noyer tous leurs nouveau-nés mâles dans le Nil. C'est dans ce contexte tragique que naît Moïse, caché dans un panier sur le fleuve, recueilli et élevé à la cour royale par la fille de Pharaon avant de fuir au désert après avoir tué un garde égyptien qui maltraitait un Hébreu. Quarante ans plus tard, Dieu lui apparaît dans un buisson ardent qui brûle sans se consumer, lui révèle son nom personnel (YHWH) et le renvoie en Égypte pour exiger la libération de son peuple. Face à l'obstination de Pharaon, Dieu frappe l'Égypte de dix plaies dévastatrices (eau changée en sang, grenouilles, sauterelles, ténèbres), culminant avec la mort des premiers-nés égyptiens, tandis que les familles hébraïques sont épargnées grâce au sang d'un agneau appliqué sur leurs portes (instituant la fête de la Pâque juive).
+        </p>
+
+        <p class="story-paragraph">
+          Brisé par la mort de son nouveau né, Pharaon laisse partir le peuple, mais change d’avis et lance son armée de chars à leur poursuite jusqu'au bord de la mer Rouge, où Dieu ouvre miraculeusement un passage à pied sec pour Israël avant d'engloutir les poursuivants. Trois mois après leur sortie, les Hébreux campent au pied du mont Sinaï, où Dieu conclut une alliance solennelle avec eux : il leur donne les Dix Commandements ainsi que des lois civiles et les plans détaillés du Tabernacle, une tente sanctuaire mobile destinée à abriter sa présence au milieu du camp. Alors même que Moïse reçoit ces instructions sur la montagne, le peuple s'impatiente et fabrique un veau d'or pour l'adorer, brisant l'alliance dès sa conclusion ; à la prière de Moïse, Dieu pardonne néanmoins et accepte d'accompagner le peuple. Pendant l'année passée au pied du Sinaï, le Lévitique établit tout le système rituel permettant à un peuple imparfait de cohabiter avec un Dieu saint : il codifie les cinq types de sacrifices, consacre Aaron et ses fils comme prêtres, fixe les règles de pureté alimentaire et morale, et institue le Grand Jour des Expiations (Yom Kippour), où un bouc émissaire emporte symboliquement tous les péchés d'Israël loin du camp.
+        </p>
+
+        <!-- Verset Clé -->
+        <blockquote class="verse-card">
+          <div class="verse-symbol">«</div>
+          <p class="verse-text">
+            L'Éternel répondit : Je marcherai moi-même avec toi, et je te donnerai du <strong>repos</strong>.
+          </p>
+          <cite class="verse-ref">Exode 33:14</cite>
+        </blockquote>
+
+        <!-- Enigme / Password Box -->
+        <div class="gate-container" id="gate-2">
+          <div class="gate-inner">
+            <div class="gate-header">
+              <span class="gate-badge">CLÉ DU LIVRE SUIVANT</span>
+              <p class="gate-instruction">
+                Saisissez la promesse finale de ce verset pour ouvrir la <strong>Page 3</strong> :
+              </p>
+            </div>
+            <form class="gate-form" id="form-gate-2" onsubmit="return false;">
+              <div class="input-wrapper">
+                <input 
+                  type="text" 
+                  id="pass-2" 
+                  class="gate-input" 
+                  placeholder="Mot de passe du verset..." 
+                  autocomplete="off" 
+                  spellcheck="false"
+                >
+                <button type="submit" class="gate-submit-btn">
+                  <span>Déverrouiller</span>
+                  <span class="arrow-icon">→</span>
+                </button>
+              </div>
+              <p class="gate-feedback" id="feedback-2"></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- PAGE 3: REPOS & TERRE PROMISE (À SUIVRE) -->
+    <article class="page-card" id="page-3" data-theme="rest">
+      <div class="page-meta">
+        <span class="chapter-badge">LIVRE TROISIÈME</span>
+        <h1 class="page-title">La Terre Promise & Le Repos</h1>
+        <p class="page-subtitle">Nombres, Deutéronome, Josué & Les Juges</p>
+      </div>
+
+      <div class="page-body">
+        <div class="unlocked-banner">
+          <div class="unlocked-seal">✦</div>
+          <h2>Le Seuil du Repos est Franchi</h2>
+          <p class="story-paragraph" style="text-align: center; max-width: 680px; margin: 0 auto 1.5rem auto;">
+            Vous avez traversé la création de la Genèse et l'épreuve du désert de l'Exode. 
+            Le peuple d'Israël se tient désormais aux frontières de la terre promise, sous le regard fidèle de l'Éternel qui marche avec eux.
+          </p>
+        </div>
+
+        <div class="preview-grid">
+          <div class="preview-item">
+            <span class="preview-num">03</span>
+            <h3>Nombres</h3>
+            <p>La traversée des 40 années d'épreuve et d'apprentissage dans le grand désert.</p>
+          </div>
+          <div class="preview-item">
+            <span class="preview-num">04</span>
+            <h3>Deutéronome</h3>
+            <p>Le testament spirituel de Moïse sur le mont Nébo et le renouvellement solennel du pacte.</p>
+          </div>
+          <div class="preview-item">
+            <span class="preview-num">05</span>
+            <h3>Josué</h3>
+            <p>La traversée miraculeuse du Jourdain et l'entrée dans le pays promis.</p>
+          </div>
+        </div>
+
+        <div class="completion-box">
+          <p class="completion-text">
+            <em>« Il vous a conduits jusqu'ici. Les prochains chapitres seront bientôt dévoilés. »</em>
+          </p>
+          <button class="return-btn" onclick="goToPage(1)">
+            <span>⟲ Relire depuis la Genèse</span>
+          </button>
+        </div>
+      </div>
+    </article>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>La Grande Histoire de la Bible — Récit, Méditation & Enigmes</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
