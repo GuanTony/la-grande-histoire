@@ -1,11 +1,10 @@
 /* ==========================================================================
-   LA GRANDE HISTOIRE - INTERACTIVE CANVAS & CHAPTER MECHANICS
+   LA GRANDE HISTOIRE - PURE VISUAL & MOTION SCRIPT
    ========================================================================== */
 
-// --- State Management ---
 const state = {
   currentPage: 1,
-  unlockedPages: [1], // Page 1 is always unlocked
+  unlockedPages: [1],
   soundEnabled: true,
   passwords: {
     1: 'peuple',
@@ -13,30 +12,26 @@ const state = {
   }
 };
 
-// Load saved progress from localStorage if available
+// Restore saved progress
 try {
-  const saved = localStorage.getItem('lgh_unlocked');
+  const saved = localStorage.getItem('lgh_vis_unlocked');
   if (saved) {
     const parsed = JSON.parse(saved);
     if (Array.isArray(parsed)) {
       state.unlockedPages = Array.from(new Set([1, ...parsed]));
     }
   }
-} catch (e) {
-  console.warn('Storage not available:', e);
-}
+} catch (e) {}
 
 // --------------------------------------------------------------------------
-// Web Audio API Synthesizer (Zero external audio files needed)
+// Audio System (Synthesized Ambient / Chimes)
 // --------------------------------------------------------------------------
 let audioCtx = null;
 
 function initAudio() {
   if (!audioCtx) {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (AudioContext) {
-      audioCtx = new AudioContext();
-    }
+    if (AudioContext) audioCtx = new AudioContext();
   }
   if (audioCtx && audioCtx.state === 'suspended') {
     audioCtx.resume();
@@ -49,31 +44,28 @@ function playUnlockSound() {
     initAudio();
     if (!audioCtx) return;
 
-    // Harmonious ethereal chord (F - A - C - E - G)
-    const notes = [349.23, 440.00, 523.25, 659.25, 783.99];
+    // Harmonic triumphant chord
+    const freqs = [261.63, 329.63, 392.00, 523.25, 659.25]; // C major 7th / 9th
     const now = audioCtx.currentTime;
 
-    notes.forEach((freq, idx) => {
+    freqs.forEach((freq, idx) => {
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
-      
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, now + idx * 0.08);
 
-      // Delicate envelope
-      gain.gain.setValueAtTime(0.001, now + idx * 0.08);
-      gain.gain.exponentialRampToValueAtTime(0.12, now + idx * 0.08 + 0.04);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.08 + 1.6);
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now + idx * 0.07);
+
+      gain.gain.setValueAtTime(0.001, now + idx * 0.07);
+      gain.gain.exponentialRampToValueAtTime(0.12, now + idx * 0.07 + 0.05);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.07 + 1.8);
 
       osc.connect(gain);
       gain.connect(audioCtx.destination);
 
-      osc.start(now + idx * 0.08);
-      osc.stop(now + idx * 0.08 + 1.7);
+      osc.start(now + idx * 0.07);
+      osc.stop(now + idx * 0.07 + 1.9);
     });
-  } catch (err) {
-    console.error('Audio play error:', err);
-  }
+  } catch (err) {}
 }
 
 function playErrorSound() {
@@ -87,311 +79,300 @@ function playErrorSound() {
     const gain = audioCtx.createGain();
 
     osc.type = 'triangle';
-    osc.frequency.setValueAtTime(140, now);
-    osc.frequency.exponentialRampToValueAtTime(70, now + 0.25);
+    osc.frequency.setValueAtTime(130, now);
+    osc.frequency.exponentialRampToValueAtTime(65, now + 0.22);
 
-    gain.gain.setValueAtTime(0.15, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+    gain.gain.setValueAtTime(0.12, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
 
     osc.connect(gain);
     gain.connect(audioCtx.destination);
 
     osc.start(now);
-    osc.stop(now + 0.26);
-  } catch (err) {
-    console.error('Audio error sound:', err);
-  }
+    osc.stop(now + 0.23);
+  } catch (err) {}
 }
 
 // --------------------------------------------------------------------------
-// Animated Canvas Background (Page-dependent Visual Themes)
+// Multi-Layer Canvas Animations
 // --------------------------------------------------------------------------
-const canvas = document.getElementById('bg-canvas');
-const ctx = canvas.getContext('2d');
+const canvases = {
+  1: document.getElementById('canvas-1'),
+  2: document.getElementById('canvas-2'),
+  3: document.getElementById('canvas-3')
+};
 
-let width, height;
-let particles = [];
-let celebrationParticles = [];
-let mouse = { x: 0, y: 0, active: false };
+const contexts = {
+  1: canvases[1].getContext('2d'),
+  2: canvases[2].getContext('2d'),
+  3: canvases[3].getContext('2d')
+};
 
-function resizeCanvas() {
-  width = canvas.width = window.innerWidth;
-  height = canvas.height = window.innerHeight;
-}
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
+let width = window.innerWidth;
+let height = window.innerHeight;
 
-window.addEventListener('mousemove', (e) => {
-  mouse.x = e.clientX;
-  mouse.y = e.clientY;
-  mouse.active = true;
-});
-
-window.addEventListener('mouseleave', () => {
-  mouse.active = false;
-});
-
-// Particle Definition
-class Particle {
-  constructor(pageTheme) {
-    this.reset(pageTheme);
-  }
-
-  reset(pageTheme) {
-    this.x = Math.random() * width;
-    this.y = Math.random() * height;
-    this.size = Math.random() * 2.2 + 0.8;
-    this.baseAlpha = Math.random() * 0.6 + 0.2;
-    this.alpha = this.baseAlpha;
-    this.pulse = Math.random() * Math.PI * 2;
-    this.pulseSpeed = Math.random() * 0.02 + 0.01;
-
-    // Movement speeds according to page theme
-    if (pageTheme === 1) {
-      // Genesis: Gentle celestial drift & starlight
-      this.vx = (Math.random() - 0.5) * 0.35;
-      this.vy = (Math.random() - 0.5) * 0.35;
-      this.color = Math.random() > 0.3 ? '245, 214, 130' : '180, 220, 255';
-    } else if (pageTheme === 2) {
-      // Exodus: Embers rising from the burning bush into night
-      this.vx = (Math.random() - 0.5) * 0.7;
-      this.vy = -(Math.random() * 1.2 + 0.4); // Ascending
-      this.size = Math.random() * 2.8 + 1;
-      this.color = Math.random() > 0.4 ? '255, 140, 40' : '245, 205, 90';
-    } else {
-      // Rest: Peaceful golden celestial waves
-      this.vx = (Math.random() - 0.5) * 0.2;
-      this.vy = (Math.random() - 0.5) * 0.15;
-      this.size = Math.random() * 3 + 1;
-      this.color = Math.random() > 0.5 ? '250, 230, 160' : '150, 210, 190';
+function resizeAll() {
+  width = window.innerWidth;
+  height = window.innerHeight;
+  for (let i = 1; i <= 3; i++) {
+    if (canvases[i]) {
+      canvases[i].width = width;
+      canvases[i].height = height;
     }
   }
+}
+window.addEventListener('resize', resizeAll);
+resizeAll();
 
-  update(pageTheme) {
-    this.x += this.vx;
-    this.y += this.vy;
-    this.pulse += this.pulseSpeed;
-    this.alpha = this.baseAlpha + Math.sin(this.pulse) * 0.2;
+// Particle Systems
+const particlesPage1 = [];
+const particlesPage2 = [];
+const particlesPage3 = [];
 
-    // Subtle reaction to mouse
-    if (mouse.active) {
-      const dx = mouse.x - this.x;
-      const dy = mouse.y - this.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 120) {
-        this.x -= (dx / dist) * 1.2;
-        this.y -= (dy / dist) * 1.2;
-      }
-    }
-
-    // Wrap around borders
-    if (pageTheme === 2) {
-      if (this.y < -10) this.y = height + 10;
-      if (this.x < 0) this.x = width;
-      if (this.x > width) this.x = 0;
-    } else {
-      if (this.x < 0) this.x = width;
-      if (this.x > width) this.x = 0;
-      if (this.y < 0) this.y = height;
-      if (this.y > height) this.y = 0;
-    }
-  }
-
-  draw() {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(${this.color}, ${Math.max(0.05, this.alpha)})`;
-    ctx.shadowBlur = 12;
-    ctx.shadowColor = `rgba(${this.color}, 0.8)`;
-    ctx.fill();
-    ctx.shadowBlur = 0;
-  }
+// Page 1: Genesis Stardust & Divine Light Rays
+for (let i = 0; i < 70; i++) {
+  particlesPage1.push({
+    x: Math.random() * width,
+    y: Math.random() * height,
+    size: Math.random() * 2.5 + 0.8,
+    vx: (Math.random() - 0.5) * 0.4,
+    vy: (Math.random() - 0.5) * 0.4,
+    alpha: Math.random() * 0.7 + 0.2,
+    pulse: Math.random() * Math.PI * 2,
+    color: Math.random() > 0.4 ? '255, 230, 150' : '200, 235, 255'
+  });
 }
 
-// Celebration Sparks on correct unlock
-class Spark {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-    const angle = Math.random() * Math.PI * 2;
-    const speed = Math.random() * 6 + 2;
-    this.vx = Math.cos(angle) * speed;
-    this.vy = Math.sin(angle) * speed;
-    this.alpha = 1;
-    this.decay = Math.random() * 0.02 + 0.015;
-    this.size = Math.random() * 3.5 + 1.5;
-    this.color = Math.random() > 0.5 ? '255, 230, 130' : '255, 180, 50';
-  }
-
-  update() {
-    this.x += this.vx;
-    this.y += this.vy;
-    this.vy += 0.06; // Gravity
-    this.alpha -= this.decay;
-  }
-
-  draw() {
-    if (this.alpha <= 0) return;
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(${this.color}, ${this.alpha})`;
-    ctx.shadowBlur = 15;
-    ctx.shadowColor = `rgba(${this.color}, 0.9)`;
-    ctx.fill();
-    ctx.shadowBlur = 0;
-  }
+// Page 2: Exodus Burning Bush & Pillar of Fire Embers
+for (let i = 0; i < 90; i++) {
+  particlesPage2.push({
+    x: Math.random() * width,
+    y: Math.random() * height,
+    size: Math.random() * 3 + 1,
+    vx: (Math.random() - 0.5) * 0.8,
+    vy: -(Math.random() * 1.6 + 0.6), // Floating up
+    alpha: Math.random() * 0.8 + 0.2,
+    color: Math.random() > 0.5 ? '255, 145, 45' : '255, 210, 80'
+  });
 }
 
-function triggerCelebration(originX, originY) {
-  for (let i = 0; i < 75; i++) {
-    celebrationParticles.push(new Spark(originX, originY));
-  }
+// Page 3: Rest & Promised Land Serene Golden Motes
+for (let i = 0; i < 60; i++) {
+  particlesPage3.push({
+    x: Math.random() * width,
+    y: Math.random() * height,
+    size: Math.random() * 3.2 + 1,
+    vx: (Math.random() - 0.5) * 0.25,
+    vy: (Math.random() - 0.5) * 0.2,
+    alpha: Math.random() * 0.6 + 0.2,
+    pulse: Math.random() * Math.PI * 2,
+    color: '250, 230, 160'
+  });
 }
 
-// Initialize particles pool
-function initParticles() {
-  particles = [];
-  const count = Math.min(100, Math.floor((width * height) / 12000));
-  for (let i = 0; i < count; i++) {
-    particles.push(new Particle(state.currentPage));
-  }
-}
-initParticles();
+let tick = 0;
 
-// Animation Loop
-let animFrame = 0;
-function animate() {
-  animFrame++;
-  ctx.clearRect(0, 0, width, height);
+function renderFrame() {
+  tick++;
 
-  // Background light beam according to chapter
+  // --- Render Page 1 (Genesis) ---
   if (state.currentPage === 1) {
-    // "Fiat Lux" radiant central ray of creation
-    const grad = ctx.createRadialGradient(width * 0.5, 0, 10, width * 0.5, height * 0.6, width * 0.6);
-    grad.addColorStop(0, 'rgba(245, 214, 130, 0.09)');
-    grad.addColorStop(0.5, 'rgba(100, 150, 220, 0.03)');
-    grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, width, height);
-  } else if (state.currentPage === 2) {
-    // Pillar of Fire & Desert Warmth
-    const grad = ctx.createRadialGradient(width * 0.5, height, 20, width * 0.5, height * 0.3, width * 0.55);
-    grad.addColorStop(0, 'rgba(235, 110, 40, 0.12)');
-    grad.addColorStop(0.6, 'rgba(180, 50, 20, 0.04)');
-    grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, width, height);
-  } else {
-    // Rest & Promised Land Aurora
-    const grad = ctx.createRadialGradient(width * 0.5, height * 0.5, 50, width * 0.5, height * 0.5, width * 0.7);
-    grad.addColorStop(0, 'rgba(120, 200, 170, 0.08)');
-    grad.addColorStop(0.5, 'rgba(230, 195, 100, 0.04)');
-    grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, width, height);
-  }
+    const ctx = contexts[1];
+    ctx.clearRect(0, 0, width, height);
 
-  // Update & Draw Ambient Particles
-  for (let i = 0; i < particles.length; i++) {
-    particles[i].update(state.currentPage);
-    particles[i].draw();
-  }
+    // Radiant god rays from top-center
+    const rayCount = 8;
+    const originX = width * 0.5;
+    const originY = height * 0.1;
+    for (let r = 0; r < rayCount; r++) {
+      const angle = (r / rayCount) * Math.PI + Math.sin(tick * 0.005 + r) * 0.15;
+      const rayLen = Math.max(width, height) * 1.2;
+      const x2 = originX + Math.cos(angle) * rayLen;
+      const y2 = originY + Math.sin(angle) * rayLen;
 
-  // Update & Draw Celebration Sparks
-  for (let i = celebrationParticles.length - 1; i >= 0; i--) {
-    celebrationParticles[i].update();
-    celebrationParticles[i].draw();
-    if (celebrationParticles[i].alpha <= 0) {
-      celebrationParticles.splice(i, 1);
+      const grad = ctx.createLinearGradient(originX, originY, x2, y2);
+      grad.addColorStop(0, 'rgba(255, 240, 180, 0.12)');
+      grad.addColorStop(0.7, 'rgba(255, 220, 140, 0.03)');
+      grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+      ctx.beginPath();
+      ctx.moveTo(originX, originY);
+      ctx.lineTo(x2 - 80, y2);
+      ctx.lineTo(x2 + 80, y2);
+      ctx.closePath();
+      ctx.fillStyle = grad;
+      ctx.fill();
     }
+
+    // Particles
+    particlesPage1.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.pulse += 0.02;
+      const currentAlpha = Math.max(0.1, p.alpha + Math.sin(p.pulse) * 0.2);
+
+      if (p.x < 0) p.x = width;
+      if (p.x > width) p.x = 0;
+      if (p.y < 0) p.y = height;
+      if (p.y > height) p.y = 0;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${p.color}, ${currentAlpha})`;
+      ctx.shadowBlur = 10;
+      ctx.shadowColor = `rgba(${p.color}, 0.8)`;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    });
   }
 
-  requestAnimationFrame(animate);
+  // --- Render Page 2 (Exodus & Leviticus) ---
+  else if (state.currentPage === 2) {
+    const ctx = contexts[2];
+    ctx.clearRect(0, 0, width, height);
+
+    // Pillar of fire aura at bottom center
+    const fireGrad = ctx.createRadialGradient(width * 0.5, height, 10, width * 0.5, height * 0.4, width * 0.5);
+    const pulseIntensity = 0.12 + Math.sin(tick * 0.04) * 0.04;
+    fireGrad.addColorStop(0, `rgba(255, 110, 20, ${pulseIntensity})`);
+    fireGrad.addColorStop(0.5, 'rgba(200, 60, 10, 0.04)');
+    fireGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    ctx.fillStyle = fireGrad;
+    ctx.fillRect(0, 0, width, height);
+
+    // Rising burning sparks
+    particlesPage2.forEach(p => {
+      p.x += p.vx + Math.sin(tick * 0.02 + p.y * 0.01) * 0.4;
+      p.y += p.vy;
+
+      if (p.y < -10) {
+        p.y = height + 10;
+        p.x = width * 0.3 + Math.random() * (width * 0.4);
+      }
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${p.color}, ${p.alpha})`;
+      ctx.shadowBlur = 12;
+      ctx.shadowColor = `rgba(${p.color}, 0.9)`;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    });
+  }
+
+  // --- Render Page 3 (Rest & Promised Land) ---
+  else if (state.currentPage === 3) {
+    const ctx = contexts[3];
+    ctx.clearRect(0, 0, width, height);
+
+    // Soft celestial golden aura
+    const restGrad = ctx.createRadialGradient(width * 0.5, height * 0.5, 40, width * 0.5, height * 0.5, width * 0.65);
+    restGrad.addColorStop(0, 'rgba(255, 235, 160, 0.09)');
+    restGrad.addColorStop(0.7, 'rgba(212, 175, 55, 0.02)');
+    restGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    ctx.fillStyle = restGrad;
+    ctx.fillRect(0, 0, width, height);
+
+    particlesPage3.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.pulse += 0.015;
+      const currentAlpha = Math.max(0.1, p.alpha + Math.sin(p.pulse) * 0.2);
+
+      if (p.x < 0) p.x = width;
+      if (p.x > width) p.x = 0;
+      if (p.y < 0) p.y = height;
+      if (p.y > height) p.y = 0;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${p.color}, ${currentAlpha})`;
+      ctx.shadowBlur = 12;
+      ctx.shadowColor = 'rgba(255, 230, 160, 0.8)';
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    });
+  }
+
+  requestAnimationFrame(renderFrame);
 }
-animate();
+renderFrame();
 
 // --------------------------------------------------------------------------
-// Navigation & Page Transitions
+// Navigation & Password Gate Logic
 // --------------------------------------------------------------------------
 function updateUI() {
-  // Update Cards Visibility
   for (let p = 1; p <= 3; p++) {
-    const card = document.getElementById(`page-${p}`);
-    const navBtn = document.getElementById(`btn-nav-${p}`);
-    const lockIcon = document.getElementById(`lock-icon-${p}`);
+    const pageEl = document.getElementById(`page-${p}`);
+    const dotBtn = document.querySelector(`.dot-btn[data-page="${p}"]`);
 
-    if (card) {
+    if (pageEl) {
       if (p === state.currentPage) {
-        card.classList.add('active');
+        pageEl.classList.add('active');
       } else {
-        card.classList.remove('active');
+        pageEl.classList.remove('active');
       }
     }
 
-    if (navBtn) {
+    if (dotBtn) {
       const isUnlocked = state.unlockedPages.includes(p);
       if (isUnlocked) {
-        navBtn.classList.remove('locked');
-        navBtn.removeAttribute('disabled');
-        if (lockIcon) lockIcon.style.display = 'none';
+        dotBtn.classList.remove('locked');
+        dotBtn.removeAttribute('disabled');
+        dotBtn.title = `Chapitre ${['I', 'II', 'III'][p - 1]}`;
       } else {
-        navBtn.classList.add('locked');
-        navBtn.setAttribute('disabled', 'true');
-        if (lockIcon) lockIcon.style.display = 'inline';
+        dotBtn.classList.add('locked');
+        dotBtn.setAttribute('disabled', 'true');
+        dotBtn.title = `Chapitre ${['I', 'II', 'III'][p - 1]} (Verrouillé)`;
       }
 
       if (p === state.currentPage) {
-        navBtn.classList.add('active');
+        dotBtn.classList.add('active');
       } else {
-        navBtn.classList.remove('active');
+        dotBtn.classList.remove('active');
       }
     }
   }
+}
 
-  // Adjust ambient glows color
-  const glowTop = document.querySelector('.glow-top');
-  const glowBottom = document.querySelector('.glow-bottom');
-  if (state.currentPage === 1) {
-    if (glowTop) glowTop.style.background = 'radial-gradient(circle, #e5c158, #ffb347)';
-    if (glowBottom) glowBottom.style.background = 'radial-gradient(circle, #2b5876, #4e4376)';
-  } else if (state.currentPage === 2) {
-    if (glowTop) glowTop.style.background = 'radial-gradient(circle, #e25822, #7a1515)';
-    if (glowBottom) glowBottom.style.background = 'radial-gradient(circle, #f39c12, #3e1b1b)';
-  } else {
-    if (glowTop) glowTop.style.background = 'radial-gradient(circle, #56ab2f, #a8e063)';
-    if (glowBottom) glowBottom.style.background = 'radial-gradient(circle, #d4af37, #1e3c72)';
+function flashTransition(callback) {
+  const flash = document.getElementById('flash-screen');
+  if (flash) {
+    flash.classList.add('trigger');
+    setTimeout(() => {
+      if (callback) callback();
+      setTimeout(() => {
+        flash.classList.remove('trigger');
+      }, 200);
+    }, 350);
+  } else if (callback) {
+    callback();
   }
-
-  // Re-orient particles smoothly
-  particles.forEach(p => p.reset(state.currentPage));
 }
 
 function goToPage(pageNum) {
   if (!state.unlockedPages.includes(pageNum)) return;
   state.currentPage = pageNum;
   updateUI();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Stepper click handlers
-document.querySelectorAll('.step-btn').forEach(btn => {
+// Dots navigation click
+document.querySelectorAll('.dot-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const page = parseInt(btn.getAttribute('data-page'), 10);
     goToPage(page);
   });
 });
 
-// --------------------------------------------------------------------------
-// Enigma / Password Verification Logic
-// --------------------------------------------------------------------------
+// String cleaner helper
 function cleanString(str) {
   if (!str) return '';
   return str
     .trim()
     .toLowerCase()
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "") // Remove accents
-    .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, ""); // Remove punctuation
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
 }
 
 function handleGateSubmit(fromPage) {
@@ -399,46 +380,48 @@ function handleGateSubmit(fromPage) {
   const feedbackEl = document.getElementById(`feedback-${fromPage}`);
   const expectedWord = state.passwords[fromPage];
 
-  if (!inputEl || !feedbackEl) return;
+  if (!inputEl) return;
 
   const entered = cleanString(inputEl.value);
   const target = cleanString(expectedWord);
 
   if (entered === target) {
-    // SUCCESS
+    // Correct password
     const nextPage = fromPage + 1;
     if (!state.unlockedPages.includes(nextPage)) {
       state.unlockedPages.push(nextPage);
       try {
-        localStorage.setItem('lgh_unlocked', JSON.stringify(state.unlockedPages));
+        localStorage.setItem('lgh_vis_unlocked', JSON.stringify(state.unlockedPages));
       } catch (e) {}
     }
 
-    feedbackEl.textContent = '✨ Sceau brisé ! Le passage s’ouvre...';
-    feedbackEl.className = 'gate-feedback success';
+    if (feedbackEl) {
+      feedbackEl.textContent = '✨';
+      feedbackEl.className = 'feedback-msg success';
+    }
 
-    // Sound & particles
     playUnlockSound();
-    const rect = inputEl.getBoundingClientRect();
-    triggerCelebration(rect.left + rect.width / 2, rect.top + rect.height / 2);
 
-    setTimeout(() => {
+    flashTransition(() => {
       goToPage(nextPage);
-    }, 700);
+      if (inputEl) inputEl.value = '';
+      if (feedbackEl) feedbackEl.textContent = '';
+    });
   } else {
-    // ERROR
-    feedbackEl.textContent = 'Le sceau résiste... Relisez le verset avec attention pour trouver le mot.';
-    feedbackEl.className = 'gate-feedback error';
+    // Incorrect password
+    if (feedbackEl) {
+      feedbackEl.textContent = 'Le sceau résiste...';
+      feedbackEl.className = 'feedback-msg error';
+    }
     playErrorSound();
 
-    // Trigger shake animation re-flow
     inputEl.classList.remove('shake');
     void inputEl.offsetWidth;
     inputEl.classList.add('shake');
   }
 }
 
-// Form listeners for Page 1 and Page 2
+// Form listeners
 const form1 = document.getElementById('form-gate-1');
 if (form1) {
   form1.addEventListener('submit', (e) => {
@@ -455,7 +438,7 @@ if (form2) {
   });
 }
 
-// Sound toggle button
+// Sound toggle
 const soundBtn = document.getElementById('sound-btn');
 const soundIcon = document.getElementById('sound-icon');
 if (soundBtn && soundIcon) {
@@ -463,9 +446,9 @@ if (soundBtn && soundIcon) {
     initAudio();
     state.soundEnabled = !state.soundEnabled;
     soundIcon.textContent = state.soundEnabled ? '🔊' : '🔇';
-    soundBtn.title = state.soundEnabled ? 'Désactiver les effets sonores' : 'Activer les effets sonores';
+    soundBtn.title = state.soundEnabled ? 'Désactiver le son' : 'Activer le son';
   });
 }
 
-// First initialization
+// Initial UI sync
 updateUI();
