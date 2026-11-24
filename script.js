@@ -115,7 +115,7 @@ function getSlidesCount(pageNum) {
   const counts = {
     1: 6, 2: 6, 3: 2, 4: 4, 5: 4, 6: 4, 7: 4,
     8: 3, 9: 3, 10: 3, 11: 6,
-    12: 3, 13: 3, 14: 3, 15: 3, 16: 3, 17: 4
+    12: 3, 13: 3, 14: 3, 15: 3, 16: 3, 17: 3
   };
   return counts[pageNum] || 3;
 }
